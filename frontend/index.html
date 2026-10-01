@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriDSS — Hệ Hỗ Trợ Ra Quyết Định Dinh Dưỡng Cá Nhân Hóa</title>
+    <!-- Bootstrap 5 CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --primary-green: #2e7d32;
+            --primary-dark: #1b5e20;
+            --bg-body: #f4f6f9;
+            --sidebar-bg: #ffffff;
+            --card-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+
+        #wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+        #sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            border-right: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        #page-content-wrapper {
+            width: calc(100% - var(--sidebar-width));
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1.25rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #f1f3f5;
+        }
+        .sidebar-menu {
+            padding: 1rem 0.75rem;
+            list-style: none;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar-menu .nav-link {
+            color: #495057;
+            font-weight: 600;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .sidebar-menu .nav-link i {
+            font-size: 1.2rem;
+            margin-right: 0.8rem;
+            color: #6c757d;
+        }
+        .sidebar-menu .nav-link:hover, .sidebar-menu .nav-link.active {
+            background-color: #e8f5e9;
+            color: var(--primary-green);
+        }
+        .sidebar-menu .nav-link:hover i, .sidebar-menu .nav-link.active i {
+            color: var(--primary-green);
+        }
+
+        .sidebar-user {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid #f1f3f5;
+            background-color: #fafafa;
+        }
+
+        .top-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e9ecef;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main-container {
+            padding: 2rem;
+            flex-grow: 1;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid #e9ecef;
+            box-shadow: var(--card-shadow);
+        }
+
+        .plan-card {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+        .plan-card:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+        .plan-card-recommended {
+            border-color: var(--primary-green) !important;
+            background: #f1f8e9;
+        }
+
+        .meal-box {
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            height: 100%;
+        }
+
+        .warning-box {
+            background-color: #fff9db;
+            border-left: 4px solid #f59f00;
+            color: #856404;
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .danger-box {
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            color: #b71c1c;
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .advice-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #1976d2;
+            color: #0d47a1;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.92rem;
+        }
+
+        .allergen-tag {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        .allergen-tag .btn-close-tag {
+            margin-left: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .allergen-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1050;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .allergen-item {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        .allergen-item:hover {
+            background-color: #f1f8e9;
+        }
+    </style>
+</head>
+<body>
+
+<div id="wrapper">
+    <!-- SIDEBAR NAVIGATION -->
+    <nav id="sidebar">
+        <div class="sidebar-brand">
+            <i class="bi bi-heart-pulse-fill text-success me-2 fs-3"></i>
+            <span>NutriDSS Engine</span>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#" class="nav-link active" onclick="switchTab('dashboard', this)">
+                    <i class="bi bi-person-heart"></i>
+                    <span>Tổng Quan & Hồ Sơ</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link" onclick="switchTab('planner', this)">
+                    <i class="bi bi-calendar3-event-fill"></i>
+                    <span>Lập Thực Đơn DSS</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link" onclick="switchTab('replacement', this)">
+                    <i class="bi bi-arrow-repeat"></i>
+                    <span>Đổi Món Thông Minh</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link" onclick="switchTab('custom-food', this)">
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <span>Tự Thêm Món & Đánh Giá</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link" onclick="switchTab('catalog', this)">
+                    <i class="bi bi-shop"></i>
+                    <span>Dinh Dưỡng & Giá Siêu Thị</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-user">
+            <div class="d-flex align-items-center">
+                <div class="bg-success text-white rounded-circle p-2 me-2 d-flex align-items-center justify-content-center" style="width:38px; height:38px;">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <div class="lh-sm overflow-hidden">
+                    <div class="fw-bold text-truncate" id="userDisplayName">Nguyễn Văn A</div>
+                    <small class="text-muted" id="userGoalBadge">Giảm cân</small>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div id="page-content-wrapper">
+        <!-- TOP HEADER -->
+        <header class="top-header">
+            <div>
+                <h5 class="fw-bold mb-0 text-dark" id="headerTitle">Hồ Sơ Sức Khỏe & Chỉ Số Thể Trạng</h5>
+                <small class="text-muted">Tính toán chỉ số y khoa BMR, TDEE, BMI và Quản lý dị ứng thực phẩm</small>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
+                    <i class="bi bi-cpu me-1"></i> DSS Core Engine: Decision Tree Ranker
+                </span>
+            </div>
+        </header>
+
+        <!-- MAIN CONTAINER -->
+        <main class="main-container">
+
+            <!-- TAB 1: TỔNG QUAN & HỒ SƠ SỨC KHỎE -->
+            <div id="tab-dashboard" class="tab-pane-content">
+                <!-- STATS & BMI OVERVIEW -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="text-muted small fw-semibold">CHỈ SỐ BMI (THỂ TRẠNG)</div>
+                            <div class="d-flex align-items-center mt-1">
+                                <div class="fs-3 fw-bold me-2" id="statBmiValue">23.0</div>
+                                <span class="badge bg-success" id="statBmiBadge"><i class="bi bi-check-circle-fill me-1"></i> Bình thường</span>
+                            </div>
+                            <small class="text-muted" id="statBmiDesc">Chuẩn WHO IDI/WPRO Châu Á</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="text-muted small fw-semibold">NĂNG LƯỢNG MỤC TIÊU</div>
+                            <div class="fs-3 fw-bold text-success mt-1" id="statCalTarget">1,800 Kcal</div>
+                            <small class="text-muted" id="statTdee">TDEE: 2,300 Kcal/ngày</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="text-muted small fw-semibold">MỤC TIÊU PROTEIN</div>
+                            <div class="fs-3 fw-bold text-primary mt-1" id="statProtTarget">135.0 g</div>
+                            <small class="text-muted">Phân bổ 30% tổng năng lượng</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="text-muted small fw-semibold">DỊ ỨNG THỰC PHẨM</div>
+                            <div class="fs-3 fw-bold text-danger mt-1" id="statAllergiesCount">1 Yếu tố</div>
+                            <small class="text-muted">Lọc cứng loại trừ 100%</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILE UPDATE FORM -->
+                <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
+                    <h5 class="fw-bold text-success mb-3 border-bottom pb-2"><i class="bi bi-person-lines-fill me-2"></i>Cập Nhật Thông Số Cơ Thể & Sức Khỏe</h5>
+                    
+                    <form id="profileForm" class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Họ tên / Biệt danh</label>
+                            <input type="text" id="profName" class="form-control" value="Nguyễn Văn A" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Giới tính</label>
+                            <select id="profGender" class="form-select" onchange="calculateBmiRealtime()">
+                                <option value="MALE" selected>Nam</option>
+                                <option value="FEMALE">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Tuổi</label>
+                            <input type="number" id="profAge" class="form-control" value="24" min="1" max="120" required>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Cân nặng (kg)</label>
+                            <input type="number" id="profWeight" class="form-control" value="68" min="10" max="300" step="0.5" oninput="calculateBmiRealtime()" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Chiều cao (cm)</label>
+                            <input type="number" id="profHeight" class="form-control" value="172" min="50" max="250" oninput="calculateBmiRealtime()" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Mức độ tập thể dục / Vận động</label>
+                            <select id="profActivity" class="form-select">
+                                <option value="SEDENTARY">Ít vận động (Dân văn phòng)</option>
+                                <option value="MODERATE" selected>Vận động vừa (3-5 buổi/tuần)</option>
+                                <option value="VERY_ACTIVE">Vận động nặng (Tập gym/thể thao hàng ngày)</option>
+                            </select>
+                        </div>
+
+                        <!-- MỤC TIÊU SỨC KHỎE -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Mục tiêu Sức khỏe Chính</label>
+                            <select id="profGoal" class="form-select" onchange="toggleSpecificGoalInput()">
+                                <option value="LOSE_WEIGHT" selected>Giảm cân (Thâm hụt calo an toàn)</option>
+                                <option value="GAIN_WEIGHT">Tăng cân lành mạnh (Thặng dư dinh dưỡng)</option>
+                                <option value="HIGH_PROTEIN">Tăng cơ / Tập gym (Ưu tiên đạm cao)</option>
+                                <option value="GROWTH">Hỗ trợ tăng trưởng / Tăng chiều cao (Canxi & Protein)</option>
+                                <option value="MAINTAIN">Duy trì vóc dáng & Cân bằng</option>
+                                <option value="LOW_SUGAR">Giảm đường & Kiểm soát đường huyết</option>
+                                <option value="CLEAN_EATING">Ăn sạch (Clean Eating) & Giảm mỡ nội tạng</option>
+                            </select>
+                        </div>
+
+                        <!-- Ô MỤC TIÊU CỤ THỂ (TUYỆT ĐỐI KHÔNG ÂM, KHÔNG VƯỢT CÂN NẶNG) -->
+                        <div class="col-md-6" id="specificGoalWrapper">
+                            <label class="form-label fw-semibold" id="specificGoalLabel">Mục tiêu muốn giảm (kg)</label>
+                            <div class="input-group">
+                                <input type="number" id="specificGoalVal" class="form-control" value="3.0" min="0.1" step="0.5" 
+                                       onkeydown="preventNegativeInput(event)" oninput="updateGoalAdviceText()" placeholder="Nhập số cân dương (vd: 3.0)">
+                                <span class="input-group-text bg-light text-muted fw-bold" id="specificGoalUnit">kg</span>
+                            </div>
+                            <div class="form-text text-muted" id="specificGoalHelp">
+                                <i class="bi bi-info-circle me-1"></i>Số cân muốn giảm là lượng thay đổi (luôn là số dương, ví dụ muốn giảm 3 kg thì nhập 3).
+                            </div>
+                        </div>
+
+                        <!-- KHAY CẢNH BÁO Y TẾ MÀU VÀNG & LỜI KHUYÊN NUTRI-DSS -->
+                        <div class="col-12" id="goalWarningContainer"></div>
+
+                        <div class="col-12">
+                            <div class="advice-box" id="goalAdviceBox">
+                                <i class="bi bi-info-circle-fill me-1"></i> 
+                                <span id="goalAdviceText">💡 Lời khuyên NutriDSS: Để giảm 3.0 kg an toàn chuẩn WHO, bạn cần khoảng 6 tuần thâm hụt 500 Kcal/ngày. Tuyệt đối không nhịn ăn đột ngột.</span>
+                            </div>
+                        </div>
+
+                        <!-- TÌM KIẾM THỰC PHẨM DỊ ỨNG AUTOCOMPLETE -->
+                        <div class="col-12 mt-4">
+                            <label class="form-label fw-semibold"><i class="bi bi-shield-slash text-danger me-1"></i>Thực Phẩm Dị Ứng Cá Nhân (Gõ chữ tìm kiếm & chọn bên dưới)</label>
+                            
+                            <div class="position-relative mb-2">
+                                <input type="text" id="allergenSearchInput" class="form-control" placeholder="Gõ tên thực phẩm dị ứng (vd: tôm, cá, trứng, sữa, đậu phộng...)..." oninput="handleAllergenSearch()">
+                                <div class="allergen-dropdown d-none" id="allergenDropdown"></div>
+                            </div>
+
+                            <div class="mt-2" id="selectedAllergensTags">
+                                <span class="allergen-tag" data-code="SEAFOOD">
+                                    Hải sản (Tôm, Cua, Cá) <span class="btn-close-tag" onclick="removeAllergenTag('SEAFOOD')">&times;</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 mt-4">
+                            <button type="submit" id="profileSubmitBtn" class="btn btn-success fw-bold px-4 py-2 shadow-sm">
+                                <i class="bi bi-check-circle me-1"></i> LƯU & TÍNH TOÁN HỒ SƠ SỨC KHỎE
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- TAB 2: LẬP THỰC ĐƠN DSS -->
+            <div id="tab-planner" class="tab-pane-content d-none">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm rounded-3 p-3 bg-white">
+                            <h5 class="fw-bold mb-3 border-bottom pb-2 text-success"><i class="bi bi-sliders me-2"></i>Lập Thực Đơn & Chi Phí</h5>
+                            <form id="planForm">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Mục tiêu Sức khỏe</label>
+                                    <select id="planGoal" class="form-select">
+                                        <option value="LOSE_WEIGHT" selected>Giảm cân</option>
+                                        <option value="HIGH_PROTEIN">Tăng cơ</option>
+                                        <option value="GAIN_WEIGHT">Tăng cân</option>
+                                        <option value="GROWTH">Tăng chiều cao</option>
+                                        <option value="MAINTAIN">Duy trì vóc dáng</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Ngân sách ăn uống dự tính (VNĐ/ngày)</label>
+                                    <input type="number" id="planBudget" class="form-control" value="70000" step="5000" min="10000" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-success w-100 fw-bold py-2 shadow-sm">
+                                    <i class="bi bi-magic me-1"></i> SINH 3 PHƯƠNG ÁN DSS
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div id="planResultsContainer">
+                            <div class="text-center py-5 text-muted bg-white rounded-3 border">
+                                <i class="bi bi-calendar3-event fs-1 text-success opacity-50"></i>
+                                <p class="mt-2">Bấm <b>"SINH 3 PHƯƠNG ÁN DSS"</b> để nhận thực đơn tối ưu cả ngày (A - Tiết kiệm, B - Cân bằng ML, C - Giàu Protein).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: ĐỔI MÓN THÔNG MINH -->
+            <div id="tab-replacement" class="tab-pane-content d-none">
+                <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
+                    <h5 class="fw-bold text-success mb-3"><i class="bi bi-arrow-repeat me-2"></i>Tính Năng Đổi Món Thông Minh</h5>
+                    <p class="text-muted">Chọn món ăn hiện tại để hệ thống đề xuất ngay Top 3 món thay thế tương đương dinh dưỡng & chi phí.</p>
+                    <div class="row g-3" id="replaceCatalogContainer"></div>
+                </div>
+            </div>
+
+            <!-- TAB 4: TỰ THÊM MÓN & ĐÁNH GIÁ -->
+            <div id="tab-custom-food" class="tab-pane-content d-none">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
+                            <h5 class="fw-bold text-success mb-3"><i class="bi bi-calculator-fill me-2"></i>Đánh Giá Món Tự Chọn & Tư Vấn Bù Trừ</h5>
+                            <form id="cfForm" class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Tên món ăn</label>
+                                    <input type="text" id="cfNameInput" class="form-control" value="Trà sữa trân châu" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Chi phí ước tính (VNĐ)</label>
+                                    <input type="number" id="cfCostInput" class="form-control" value="45000" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label fw-semibold">Năng lượng (Kcal)</label>
+                                    <input type="number" id="cfCalInput" class="form-control" value="450" min="0" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label fw-semibold">Protein (g)</label>
+                                    <input type="number" step="0.1" id="cfProtInput" class="form-control" value="3.0" min="0" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label fw-semibold">Chất béo (g)</label>
+                                    <input type="number" step="0.1" id="cfFatInput" class="form-control" value="12.0" min="0" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label fw-semibold">Natri (mg)</label>
+                                    <input type="number" id="cfSodiumInput" class="form-control" value="400" min="0">
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary fw-bold w-100 py-2 shadow-sm">
+                                        <i class="bi bi-search me-1"></i> PHÂN TÍCH & TƯ VẤN DSS
+                                    </button>
+                                </div>
+                            </form>
+                            <div id="cfResultBox" class="mt-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: DINH DƯỠNG & GIÁ SIÊU THỊ -->
+            <div id="tab-catalog" class="tab-pane-content d-none">
+                <div class="row g-4">
+                    <div class="col-md-7">
+                        <div class="card border-0 shadow-sm p-3 bg-white">
+                            <h5 class="fw-bold text-success mb-3"><i class="bi bi-table me-2"></i>Bảng Thực Phẩm Chuẩn (Food Master)</h5>
+                            <div class="table-responsive" style="max-height: 450px;">
+                                <table class="table table-sm table-hover align-middle" id="foodMasterTable">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Tên thực phẩm</th>
+                                            <th>Calo/100g</th>
+                                            <th>Protein</th>
+                                            <th>Carb</th>
+                                            <th>Fat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card border-0 shadow-sm p-3 bg-white">
+                            <h5 class="fw-bold text-primary mb-3"><i class="bi bi-shop me-2"></i>Giá Niêm Yết Siêu Thị VN</h5>
+                            <div class="table-responsive" style="max-height: 450px;">
+                                <table class="table table-sm table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Siêu thị</th>
+                                            <th>Sản phẩm</th>
+                                            <th>VNĐ/100g</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>GO! Vietnam</td><td>Gạo ST25 5kg</td><td>2,900đ</td></tr>
+                                        <tr><td>AEON EShop</td><td>Ức gà phi lê 500g</td><td>9,000đ</td></tr>
+                                        <tr><td>WinMart</td><td>Thịt thăn lợn 400g</td><td>15,500đ</td></tr>
+                                        <tr><td>GO! Vietnam</td><td>Cá rô phi làm sạch 1kg</td><td>5,500đ</td></tr>
+                                        <tr><td>WinMart</td><td>Rau muống sạch 500g</td><td>3,000đ</td></tr>
+                                        <tr><td>AEON EShop</td><td>Súp lơ xanh 500g</td><td>4,800đ</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- REPLACEMENT MODAL -->
+<div class="modal fade" id="replacementModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title fw-bold"><i class="bi bi-arrow-repeat me-2"></i>Gợi Ý Đổi Món Thay Thế</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="replacementModalContent"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const API_BASE = "";
+    let selectedAllergenCodes = ["SEAFOOD"];
+
+    const ALLERGEN_DATABASE = [
+        { code: "SEAFOOD", name_vi: "Hải sản (Tôm, Cua, Mực, Cá biển)" },
+        { code: "PEANUT", name_vi: "Đậu phộng / Lạc" },
+        { code: "EGG", name_vi: "Trứng gà / Trứng vịt" },
+        { code: "LACTOSE", name_vi: "Sữa & Phô mai (Lactose)" },
+        { code: "SOY", name_vi: "Đậu nành & Đậu phụ" },
+        { code: "GLUTEN", name_vi: "Gluten / Lúa mì / Bánh mì" }
+    ];
+
+    function calculateBmiRealtime() {
+        const weight = parseFloat(document.getElementById('profWeight').value) || 0;
+        const heightCm = parseFloat(document.getElementById('profHeight').value) || 0;
+
+        if (heightCm <= 0 || weight <= 0) return;
+
+        const heightM = heightCm / 100.0;
+        const bmi = (weight / (heightM * heightM)).toFixed(1);
+
+        const valEl = document.getElementById('statBmiValue');
+        const badgeEl = document.getElementById('statBmiBadge');
+
+        valEl.innerText = bmi;
+
+        if (bmi < 18.5) {
+            badgeEl.className = "badge bg-warning text-dark";
+            badgeEl.innerHTML = '<i class="bi bi-exclamation-circle-fill me-1"></i> Thiếu cân (Gầy)';
+        } else if (bmi >= 18.5 && bmi < 23.0) {
+            badgeEl.className = "badge bg-success text-white";
+            badgeEl.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Bình thường (Khỏe mạnh)';
+        } else if (bmi >= 23.0 && bmi < 25.0) {
+            badgeEl.className = "badge bg-warning text-dark";
+            badgeEl.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-1"></i> Thừa cân';
+        } else {
+            badgeEl.className = "badge bg-danger text-white";
+            badgeEl.innerHTML = '<i class="bi bi-x-circle-fill me-1"></i> Béo phì';
+        }
+
+        updateGoalAdviceText();
+    }
+
+    function preventNegativeInput(e) {
+        // Chặn hoàn toàn ký tự dấu trừ '-', dấu cộng '+', ký tự lũy thừa 'e', 'E'
+        if (e.key === '-' || e.key === '+' || e.key === 'e' || e.key === 'E') {
+            e.preventDefault();
+        }
+    }
+
+    function toggleSpecificGoalInput() {
+        const goal = document.getElementById('profGoal').value;
+        const wrapper = document.getElementById('specificGoalWrapper');
+        const label = document.getElementById('specificGoalLabel');
+        const unit = document.getElementById('specificGoalUnit');
+        const help = document.getElementById('specificGoalHelp');
+        const valInput = document.getElementById('specificGoalVal');
+        const currentWeight = parseFloat(document.getElementById('profWeight').value) || 68.0;
+
+        if (goal === 'LOSE_WEIGHT') {
+            wrapper.classList.remove('d-none');
+            label.innerText = 'Mục tiêu muốn giảm (kg)';
+            if (unit) unit.innerText = 'kg';
+            if (help) help.innerHTML = `<i class="bi bi-info-circle me-1"></i>Số cân muốn giảm là lượng thay đổi (luôn là số dương, tối đa < ${currentWeight} kg).`;
+            valInput.setAttribute('max', (currentWeight - 0.5).toFixed(1));
+        } else if (goal === 'GAIN_WEIGHT') {
+            wrapper.classList.remove('d-none');
+            label.innerText = 'Mục tiêu muốn tăng (kg)';
+            if (unit) unit.innerText = 'kg';
+            if (help) help.innerHTML = '<i class="bi bi-info-circle me-1"></i>Số cân muốn tăng (luôn là số dương, ví dụ muốn tăng 3 kg thì nhập 3).';
+            valInput.removeAttribute('max');
+        } else if (goal === 'GROWTH') {
+            wrapper.classList.remove('d-none');
+            label.innerText = 'Mục tiêu tăng chiều cao (cm)';
+            if (unit) unit.innerText = 'cm';
+            if (help) help.innerHTML = '<i class="bi bi-info-circle me-1"></i>Số cm chiều cao mục tiêu (luôn là số dương).';
+            valInput.removeAttribute('max');
+        } else {
+            wrapper.classList.add('d-none');
+        }
+
+        updateGoalAdviceText();
+    }
+
+    function updateGoalAdviceText() {
+        const goal = document.getElementById('profGoal').value;
+        let valInput = document.getElementById('specificGoalVal');
+        let currentWeight = parseFloat(document.getElementById('profWeight').value) || 68.0;
+        const warningContainer = document.getElementById('goalWarningContainer');
+        const adviceText = document.getElementById('goalAdviceText');
+        const submitBtn = document.getElementById('profileSubmitBtn');
+
+        warningContainer.innerHTML = '';
+        if (submitBtn) submitBtn.disabled = false;
+
+        let rawVal = parseFloat(valInput.value);
+
+        if (isNaN(rawVal)) {
+            adviceText.innerHTML = '💡 <i>Vui lòng nhập mục tiêu mong muốn (luôn là số dương)...</i>';
+            return;
+        }
+
+        // 1. CHẶN TUYỆT ĐỐI SỐ ÂM
+        if (rawVal < 0) {
+            rawVal = Math.abs(rawVal);
+            valInput.value = rawVal;
+            warningContainer.innerHTML = `
+                <div class="danger-box">
+                    <i class="bi bi-x-octagon-fill me-1"></i> ⛔ <b>Mục tiêu không thể là số âm:</b> Mục tiêu thể hiện lượng cân cần thay đổi nên luôn là số dương. Hệ thống đã tự động chuyển về <b>${rawVal}</b>.
+                </div>
+            `;
+        }
+
+        let val = rawVal;
+
+        if (goal === 'LOSE_WEIGHT') {
+            // Cập nhật trần max cho input
+            valInput.setAttribute('max', (currentWeight - 0.5).toFixed(1));
+
+            // 2. CHẶN TUYỆT ĐỐI: SỐ CÂN GIẢM KHÔNG ĐƯỢC VƯỢT QUÁ HOẶC BẰNG TRỌNG LƯỢNG HIỆN TẠI
+            if (val >= currentWeight) {
+                if (submitBtn) submitBtn.disabled = true;
+                warningContainer.innerHTML = `
+                    <div class="danger-box">
+                        <i class="bi bi-slash-circle-fill me-1"></i> ⛔ <b>Lỗi Nhập Liệu Phi Lý:</b> Số cân muốn giảm (<b>${val} kg</b>) tuyệt đối không thể bằng hoặc vượt quá tổng trọng lượng hiện tại của bạn (<b>${currentWeight} kg</b>). Bạn không thể giảm toàn bộ cơ thể về 0 kg! Nút lưu đã bị tạm khóa, vui lòng nhập số cân giảm hợp lý.
+                    </div>
+                `;
+                adviceText.innerHTML = `⚠️ <b>Cảnh báo:</b> Vui lòng nhập lại số cân muốn giảm nhỏ hơn ${currentWeight} kg để hệ thống tính toán năng lượng thâm hụt an toàn.`;
+                return;
+            }
+
+            // 3. CẢNH BÁO NHẸ MÀU VÀNG: GIẢM TỪ 1/3 TRỌNG LƯỢNG CƠ THỂ TRỞ LÊN
+            const oneThirdWeight = (currentWeight / 3.0).toFixed(1);
+            if (val >= (currentWeight / 3.0)) {
+                warningContainer.innerHTML = `
+                    <div class="warning-box">
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i> ⚠️ <b>Cảnh Báo Sức Khỏe NutriDSS (Mức độ nhẹ - Cần lưu ý):</b> Bạn đang đặt mục tiêu giảm <b>${val} kg</b> (chiếm từ 1/3 trọng lượng cơ thể ${currentWeight} kg trở lên - ngưỡng 1/3 là ~${oneThirdWeight} kg). Đây là mức giảm rất lớn trong một đợt! Cơ thể sẽ khó thích nghi với việc sụt giảm cân nặng quá nhiều, có thể gây suy nhược, sụt giảm trao đổi chất, rối loạn nội tiết và mất khối cơ bắp.
+                        <br><span class="mt-1 d-inline-block"><i class="bi bi-lightbulb-fill text-warning me-1"></i><b>Khuyến nghị Y khoa:</b> Bạn nên chia nhỏ mục tiêu thành từng đợt (mỗi đợt 3 - 5 kg hoặc 5 - 10% thể trọng) để cơ thể kịp thời thích nghi và duy trì cân nặng ổn định.</span>
+                    </div>
+                `;
+            }
+
+            const weeks = Math.max(1, Math.round(val * 2));
+            adviceText.innerHTML = `💡 <b>Lời khuyên NutriDSS:</b> Để giảm <b>${val} kg</b> an toàn chuẩn WHO, bạn cần khoảng <b>${weeks} tuần</b> (thâm hụt 500 Kcal/ngày, tốc độ ~0.5 kg/tuần). Tuyệt đối không nhịn ăn đột ngột.`;
+
+        } else if (goal === 'GAIN_WEIGHT') {
+            valInput.removeAttribute('max');
+            if (val > 30) {
+                warningContainer.innerHTML = `
+                    <div class="warning-box">
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i> ⚠️ <b>Cảnh Báo Sức Khỏe NutriDSS:</b> Mục tiêu tăng <b>${val} kg</b> là mức tăng rất lớn trong một lộ trình. Tăng cân quá nhanh có thể gây tích mỡ nội tạng thay vì tăng cơ. Nên duy trì tăng bền vững 1 - 2 kg/tháng.
+                    </div>
+                `;
+            }
+            adviceText.innerHTML = `💡 <b>Lời khuyên NutriDSS:</b> Để tăng <b>${val} kg</b> lành mạnh, hãy duy trì thặng dư 300 - 400 Kcal/ngày từ đạm tươi (thịt nạc, cá, trứng) và tinh bột hấp thu chậm (khoai lang, yến mạch, gạo lứt).`;
+
+        } else if (goal === 'GROWTH') {
+            valInput.removeAttribute('max');
+            adviceText.innerHTML = `💡 <b>Lời khuyên NutriDSS:</b> Hỗ trợ dinh dưỡng tăng chiều cao (+<b>${val} cm</b>): Ưu tiên các món giàu Canxi, Vitamin D3, Protein (cá biển, trứng, sữa, rau xanh sẫm) kết hợp vận động bơi lội/bóng rổ và đi ngủ trước 23h.`;
+        } else if (goal === 'HIGH_PROTEIN') {
+            valInput.removeAttribute('max');
+            adviceText.innerHTML = `💡 <b>Lời khuyên NutriDSS:</b> Duy trì 1.8g - 2.2g Protein/kg trọng lượng cơ thể kết hợp các bài tập kháng lực (Gym/Calisthenics) để kích thích tổng hợp cơ bắp tối đa.`;
+        } else {
+            valInput.removeAttribute('max');
+            adviceText.innerHTML = `💡 <b>Lời khuyên NutriDSS:</b> Duy trì chế độ ăn đa dạng 4 nhóm chất chuẩn WHO để cơ thể luôn tràn đầy năng lượng và cân bằng chuyển hóa.`;
+        }
+    }
+
+    // Allergen Autocomplete Search
+    function handleAllergenSearch() {
+        const input = document.getElementById('allergenSearchInput').value.toLowerCase().trim();
+        const dropdown = document.getElementById('allergenDropdown');
+
+        if (!input) {
+            dropdown.classList.add('d-none');
+            return;
+        }
+
+        const matches = ALLERGEN_DATABASE.filter(a => 
+            a.name_vi.toLowerCase().includes(input) && !selectedAllergenCodes.includes(a.code)
+        );
+
+        if (matches.length === 0) {
+            dropdown.classList.add('d-none');
+            return;
+        }
+
+        dropdown.innerHTML = matches.map(a => `
+            <div class="allergen-item" onclick="addAllergenTag('${a.code}', '${a.name_vi}')">
+                <i class="bi bi-shield-exclamation text-danger me-1"></i> ${a.name_vi}
+            </div>
+        `).join('');
+
+        dropdown.classList.remove('d-none');
+    }
+
+    function addAllergenTag(code, nameVi) {
+        if (!selectedAllergenCodes.includes(code)) {
+            selectedAllergenCodes.push(code);
+            renderAllergenTags();
+        }
+        document.getElementById('allergenSearchInput').value = '';
+        document.getElementById('allergenDropdown').classList.add('d-none');
+    }
+
+    function removeAllergenTag(code) {
+        selectedAllergenCodes = selectedAllergenCodes.filter(c => c !== code);
+        renderAllergenTags();
+    }
+
+    function renderAllergenTags() {
+        const container = document.getElementById('selectedAllergensTags');
+        container.innerHTML = selectedAllergenCodes.map(code => {
+            const item = ALLERGEN_DATABASE.find(a => a.code === code) || { name_vi: code };
+            return `
+                <span class="allergen-tag" data-code="${code}">
+                    ${item.name_vi} <span class="btn-close-tag" onclick="removeAllergenTag('${code}')">&times;</span>
+                </span>
+            `;
+        }).join('');
+        document.getElementById('statAllergiesCount').innerText = `${selectedAllergenCodes.length} Yếu tố`;
+    }
+
+    // Tab Switching
+    function switchTab(tabId, element) {
+        document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-pane-content').forEach(el => el.classList.add('d-none'));
+
+        element.classList.add('active');
+        document.getElementById(`tab-${tabId}`).classList.remove('d-none');
+
+        const titleMap = {
+            'dashboard': 'Hồ Sơ Sức Khỏe & Chỉ Số Thể Trạng',
+            'planner': 'Lập Thực Đơn DSS Tối Ưu',
+            'replacement': 'Tính Năng Đổi Món Thông Minh',
+            'custom-food': 'Tự Thêm Món & Đánh Giá DSS',
+            'catalog': 'Dinh Dưỡng & Giá Siêu Thị VN'
+        };
+        document.getElementById('headerTitle').innerText = titleMap[tabId] || 'NutriDSS Dashboard';
+
+        if (tabId === 'replacement') loadReplacementCatalog();
+        if (tabId === 'catalog') loadFoodMasterTable();
+    }
+
+    // Global state
+    window.currentUserProfile = null;
+    window.currentMealPlan = null;
+    window.customFoodsAdded = [];
+
+    function escapeHtml(str) {
+        if (str === null || str === undefined) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    // Handle Profile Submission
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const weight = parseFloat(document.getElementById('profWeight').value) || 0;
+        const goal = document.getElementById('profGoal').value;
+        const goalVal = parseFloat(document.getElementById('specificGoalVal').value) || 0;
+
+        // Chặn lỗi nhập liệu trước khi gửi
+        if (goalVal < 0) {
+            alert('⛔ Lỗi: Mục tiêu không thể là số âm! Vui lòng nhập số dương.');
+            return;
+        }
+
+        if (goal === 'LOSE_WEIGHT' && goalVal >= weight) {
+            alert(`⛔ Lỗi: Số cân muốn giảm (${goalVal} kg) tuyệt đối không thể bằng hoặc vượt quá tổng trọng lượng hiện tại của bạn (${weight} kg)!`);
+            document.getElementById('specificGoalVal').focus();
+            return;
+        }
+
+        const payload = {
+            display_name: document.getElementById('profName').value,
+            gender: document.getElementById('profGender').value,
+            weight_kg: weight,
+            height_cm: parseFloat(document.getElementById('profHeight').value),
+            age: parseInt(document.getElementById('profAge').value),
+            activity_level: document.getElementById('profActivity').value,
+            health_goal: goal,
+            goal_target_value: goalVal,
+            allergies: selectedAllergenCodes
+        };
+
+        try {
+            const res = await fetch(`${API_BASE}/api/profile/calculate`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                alert('Lỗi tính toán: ' + (data.detail || JSON.stringify(data)));
+                return;
+            }
+
+            window.currentUserProfile = data;
+
+            document.getElementById('statCalTarget').innerText = `${data.target_calories.toLocaleString()} Kcal`;
+            document.getElementById('statTdee').innerText = `TDEE: ${data.tdee.toLocaleString()} Kcal/ngày`;
+            document.getElementById('statProtTarget').innerText = `${data.target_protein_g} g`;
+            document.getElementById('userDisplayName').innerText = data.display_name;
+
+            const goalMap = {
+                'LOSE_WEIGHT': 'Giảm cân',
+                'GAIN_WEIGHT': 'Tăng cân',
+                'HIGH_PROTEIN': 'Tăng cơ',
+                'GROWTH': 'Tăng chiều cao',
+                'MAINTAIN': 'Duy trì vóc dáng',
+                'LOW_SUGAR': 'Giảm đường',
+                'CLEAN_EATING': 'Ăn sạch'
+            };
+            const badge = document.getElementById('userGoalBadge');
+            if (badge) badge.innerText = goalMap[goal] || goal;
+
+            // Đồng bộ sang tab Kế hoạch thực đơn
+            const planGoalSelect = document.getElementById('planGoal');
+            if (planGoalSelect) planGoalSelect.value = goal;
+
+            // Render lại lời khuyên & cảnh báo từ hệ thống DSS
+            if (data.goal_advice) {
+                document.getElementById('goalAdviceText').innerHTML = data.goal_advice;
+            }
+
+            if (data.goal_warnings && data.goal_warnings.length > 0) {
+                const warningContainer = document.getElementById('goalWarningContainer');
+                warningContainer.innerHTML = data.goal_warnings.map(w => `
+                    <div class="${w.type === 'danger' ? 'danger-box' : 'warning-box'}">
+                        ${w.message.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')}
+                    </div>
+                `).join('');
+            }
+
+            alert('✅ Đã cập nhật Hồ sơ Sức khỏe & Chỉ số BMI thành công!');
+        } catch (err) {
+            alert('Lỗi tính toán: ' + err.message);
+        }
+    });
+
+    // Handle Plan Form
+    document.getElementById('planForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const goal = document.getElementById('planGoal').value;
+        const budget = parseFloat(document.getElementById('planBudget').value);
+
+        const container = document.getElementById('planResultsContainer');
+        container.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-success"></div><p class="mt-2 text-muted">Đang tối ưu thực đơn và chạy ML Decision Tree Ranker...</p></div>';
+
+        const planPayload = {
+            health_goal: goal,
+            daily_budget_vnd: budget,
+            allergies: selectedAllergenCodes
+        };
+
+        // Gửi kèm mục tiêu cá nhân từ hồ sơ nếu có
+        if (window.currentUserProfile) {
+            planPayload.target_calories = window.currentUserProfile.target_calories;
+            planPayload.target_protein_g = window.currentUserProfile.target_protein_g;
+            planPayload.target_carb_g = window.currentUserProfile.target_carb_g;
+            planPayload.target_fat_g = window.currentUserProfile.target_fat_g;
+        }
+
+        try {
+            const res = await fetch(`${API_BASE}/api/meal-plans/generate`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(planPayload)
+            });
+
+            const data = await res.json();
+            if (!res.ok) {
+                container.innerHTML = `<div class="alert alert-danger">${escapeHtml(data.detail)}</div>`;
+                return;
+            }
+
+            window.currentMealPlan = data;
+            renderPlanOptions(data.options, goal, budget, data.budget_warning);
+        } catch (err) {
+            container.innerHTML = `<div class="alert alert-danger">Lỗi kết nối API: ${escapeHtml(err.message)}</div>`;
+        }
+    });
+
+    function renderPlanOptions(options, goal, budget, budgetWarning) {
+        const container = document.getElementById('planResultsContainer');
+        let html = '';
+
+        if (budgetWarning) {
+            html += `<div class="alert alert-warning mb-4 shadow-sm"><i class="bi bi-exclamation-triangle-fill me-2"></i>${budgetWarning.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')}</div>`;
+        }
+
+        options.forEach((opt, idx) => {
+            const isBest = idx === 1;
+            const cardClass = isBest ? 'plan-card plan-card-recommended p-3 mb-4' : 'plan-card p-3 mb-4';
+
+            html += `
+                <div class="${cardClass}">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="fw-bold text-success mb-0">${escapeHtml(opt.option_name)}</h5>
+                        ${isBest ? '<span class="badge bg-success">Đề xuất DSS khuyên dùng</span>' : ''}
+                    </div>
+                    <p class="text-muted small mb-2">${escapeHtml(opt.description)}</p>
+
+                    <div class="d-flex gap-3 mb-3 p-2 rounded bg-white border text-center flex-wrap">
+                        <div class="flex-fill">🔥 <b>${opt.total_calories}</b> Kcal ${opt.calorie_achievement_pct ? `<span class="badge bg-light text-dark">(${opt.calorie_achievement_pct}%)</span>` : ''}</div>
+                        <div class="flex-fill">🥩 <b>${opt.total_protein_g}g</b> Protein ${opt.protein_achievement_pct ? `<span class="badge bg-light text-dark">(${opt.protein_achievement_pct}%)</span>` : ''}</div>
+                        <div class="flex-fill text-danger fw-bold">💰 ~${opt.total_cost_vnd.toLocaleString()} VNĐ</div>
+                        <div class="flex-fill text-primary"><b>${opt.average_score}</b>/5.0 <i class="bi bi-star-fill text-warning"></i></div>
+                    </div>
+
+                    <div class="row g-2">
+                        ${renderMealCard('Bữa Sáng', opt.meals.breakfast, goal, budget)}
+                        ${renderMealCard('Bữa Trưa', opt.meals.lunch, goal, budget)}
+                        ${renderMealCard('Bữa Tối', opt.meals.dinner, goal, budget)}
+                    </div>
+                </div>
+            `;
+        });
+
+        // Khu vực theo dõi món tự thêm nếu có
+        if (window.customFoodsAdded && window.customFoodsAdded.length > 0) {
+            let totalExtraCal = window.customFoodsAdded.reduce((s, f) => s + f.calories, 0);
+            let totalExtraCost = window.customFoodsAdded.reduce((s, f) => s + f.cost, 0);
+            html += `
+                <div class="card p-3 border-info mt-3 bg-light">
+                    <h6 class="fw-bold text-info"><i class="bi bi-plus-circle me-1"></i> Các món tự nhập bổ sung hôm nay:</h6>
+                    <ul class="mb-2 ps-3 small">
+                        ${window.customFoodsAdded.map(f => `<li><b>${escapeHtml(f.name)}</b>: +${f.calories} Kcal, +${f.cost.toLocaleString()}đ</li>`).join('')}
+                    </ul>
+                    <div class="small fw-semibold text-dark">Tổng phụ trội: +${totalExtraCal} Kcal | +${totalExtraCost.toLocaleString()} VNĐ</div>
+                </div>
+            `;
+        }
+
+        container.innerHTML = html;
+    }
+
+    function renderMealCard(mealTypeTitle, meal, goal, budget) {
+        return `
+            <div class="col-md-4">
+                <div class="meal-box">
+                    <span class="badge bg-secondary mb-1">${escapeHtml(mealTypeTitle)}</span>
+                    <h6 class="fw-bold mb-1">${escapeHtml(meal.name_vi)}</h6>
+                    <div class="small text-muted mb-2">
+                        🔥 ${meal.calories} Kcal | 🥩 ${meal.protein_g}g P<br>
+                        💰 <b>~${meal.estimated_cost_vnd.toLocaleString()}đ</b>
+                    </div>
+                    <button class="btn btn-sm btn-outline-success w-100" onclick="triggerReplaceModal(${meal.id}, '${escapeHtml(goal)}', ${budget / 3})">
+                        <i class="bi bi-arrow-repeat"></i> Đổi món này
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    async function triggerReplaceModal(recipeId, goal, mealBudget) {
+        const content = document.getElementById('replacementModalContent');
+        content.innerHTML = '<div class="text-center py-3"><div class="spinner-border text-success"></div></div>';
+
+        const modal = new bootstrap.Modal(document.getElementById('replacementModal'));
+        modal.show();
+
+        try {
+            const res = await fetch(`${API_BASE}/api/meal-plans/replace-item`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ current_recipe_id: recipeId, health_goal: goal, budget_vnd: mealBudget, allergies: selectedAllergenCodes })
+            });
+
+            const data = await res.json();
+            if (!res.ok) {
+                content.innerHTML = `<div class="alert alert-danger">${escapeHtml(data.detail)}</div>`;
+                return;
+            }
+
+            let html = '<p class="text-muted small mb-2">Các món thay thế tương đương dinh dưỡng & ngân sách:</p>';
+
+            data.replacement_options.forEach(opt => {
+                html += `
+                    <div class="border rounded p-2 mb-2 bg-light">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <b>${escapeHtml(opt.name_vi)}</b>
+                            <span class="badge bg-success">${opt.score}/5.0</span>
+                        </div>
+                        <div class="small text-muted">🔥 ${opt.calories} Kcal (lệch ${opt.cal_diff || 0} Kcal) | 🥩 ${opt.protein_g}g P | 💰 ~${opt.estimated_cost_vnd.toLocaleString()}đ</div>
+                        <span class="badge bg-white text-dark border me-1">ML Score: ${opt.score}/5.0</span>
+                        <span class="badge bg-success bg-opacity-10 text-success">${escapeHtml(opt.compatibility_label)}</span>
+                    </div>
+                `;
+            });
+            content.innerHTML = html;
+        } catch (err) {
+            content.innerHTML = `<div class="alert alert-danger">Lỗi: ${escapeHtml(err.message)}</div>`;
+        }
+    }
+
+    // Load Catalog for Replacement Tab
+    async function loadReplacementCatalog() {
+        const container = document.getElementById('replaceCatalogContainer');
+        container.innerHTML = '<div class="text-center py-3"><div class="spinner-border text-success"></div></div>';
+
+        try {
+            const res = await fetch(`${API_BASE}/api/recipes`);
+            const recipes = await res.json();
+
+            container.innerHTML = recipes.map(r => `
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light h-100">
+                        <span class="badge bg-success mb-1">${escapeHtml(r.meal_type)}</span>
+                        <h6 class="fw-bold">${escapeHtml(r.name_vi)}</h6>
+                        <p class="small text-muted mb-2">${escapeHtml(r.description)}</p>
+                        <button class="btn btn-sm btn-outline-success" onclick="triggerReplaceModal(${r.id}, 'LOSE_WEIGHT', 25000)">
+                            <i class="bi bi-arrow-repeat"></i> Tìm món thay thế tương đương
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        } catch (err) {}
+    }
+
+    window.appendCustomFoodToActivePlan = function(name, cal, prot, cost) {
+        window.customFoodsAdded.push({ name, calories: cal, protein_g: prot, cost: cost });
+        alert(`✅ Đã cộng món "${name}" (+${cal} Kcal, +${cost.toLocaleString()}đ) vào danh sách theo dõi thực đơn hôm nay!`);
+        if (window.currentMealPlan) {
+            renderPlanOptions(
+                window.currentMealPlan.options, 
+                document.getElementById('planGoal').value, 
+                parseFloat(document.getElementById('planBudget').value),
+                window.currentMealPlan.budget_warning
+            );
+        }
+    };
+
+    // Handle Custom Food Form
+    document.getElementById('cfForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Lấy mục tiêu thực tế từ hồ sơ nếu có, tránh fix cứng
+        const currentCalTarget = window.currentUserProfile?.target_calories || 1800.0;
+        const currentBudgetTarget = parseFloat(document.getElementById('planBudget')?.value) || 70000.0;
+        const sodiumInputVal = parseFloat(document.getElementById('cfSodiumInput')?.value) || 400.0;
+
+        const payload = {
+            food_name: document.getElementById('cfNameInput').value,
+            estimated_cost_vnd: parseFloat(document.getElementById('cfCostInput').value),
+            calories: parseFloat(document.getElementById('cfCalInput').value),
+            protein_g: parseFloat(document.getElementById('cfProtInput').value),
+            fat_g: parseFloat(document.getElementById('cfFatInput').value),
+            sodium_mg: sodiumInputVal,
+            daily_target_calories: currentCalTarget,
+            daily_budget_vnd: currentBudgetTarget
+        };
+
+        try {
+            const res = await fetch(`${API_BASE}/api/analyze/custom-food`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            if (!res.ok) {
+                alert('Lỗi phân tích: ' + (data.detail || JSON.stringify(data)));
+                return;
+            }
+
+            let warningsHtml = data.warnings.map(w => `<div class="warning-box"><i class="bi bi-exclamation-triangle me-1"></i> ${escapeHtml(w)}</div>`).join('');
+            let adviceHtml = data.dss_advice.map(a => `<div class="advice-box"><i class="bi bi-info-circle me-1"></i> ${escapeHtml(a)}</div>`).join('');
+
+            // Escape dữ liệu chống XSS triệt để
+            const safeName = escapeHtml(data.food_name);
+            document.getElementById('cfResultBox').innerHTML = `
+                <div class="card p-3 bg-light border">
+                    <h5 class="fw-bold text-dark">${safeName}</h5>
+                    <p class="mb-1">Tỷ trọng Năng lượng trong ngày (mục tiêu ${data.daily_target_calories.toLocaleString()} Kcal): <b>${data.cal_percent_of_daily_target}%</b></p>
+                    <p class="mb-2">Tỷ trọng Chi phí trong ngày (ngân sách ${data.daily_budget_vnd.toLocaleString()}đ): <b>${data.cost_percent_of_daily_budget}%</b></p>
+                    <p class="mb-2 text-muted small">Natri: <b>${data.sodium_mg || 400} mg</b> | Đạm: <b>${data.protein_g}g</b> | Béo: <b>${data.fat_g}g</b></p>
+                    ${warningsHtml}
+                    ${adviceHtml}
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-sm btn-outline-success" onclick="appendCustomFoodToActivePlan('${safeName.replace(/'/g, "\\'")}', ${data.calories}, ${data.protein_g}, ${data.estimated_cost_vnd})">
+                            <i class="bi bi-plus-circle me-1"></i> Cộng món này vào theo dõi thực đơn hôm nay
+                        </button>
+                    </div>
+                </div>
+            `;
+        } catch (err) {
+            alert('Lỗi phân tích: ' + err.message);
+        }
+    });
+
+    // Load Food Master
+    async function loadFoodMasterTable() {
+        try {
+            const res = await fetch(`${API_BASE}/api/foods`);
+            const foods = await res.json();
+            const tbody = document.querySelector('#foodMasterTable tbody');
+            tbody.innerHTML = foods.map(f => `
+                <tr>
+                    <td><b>${f.canonical_name_vi}</b></td>
+                    <td>${f.calories_kcal_100g} Kcal</td>
+                    <td>${f.protein_g_100g}g</td>
+                    <td>${f.carb_g_100g}g</td>
+                    <td>${f.fat_g_100g}g</td>
+                </tr>
+            `).join('');
+        } catch (err) {}
+    }
+
+    // Init
+    calculateBmiRealtime();
+    toggleSpecificGoalInput();
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches and test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Large binary installers & executables
+*.exe
+dotnet-sdk-*.exe
+
+# IDE / Editor folders
+.vscode/
+.idea/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

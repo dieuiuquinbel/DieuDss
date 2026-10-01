@@ -1,0 +1,7 @@
+﻿id,code,name_vi,description
+1,SEAFOOD,"Hải sản (Tôm, Cua, Cá)","Dị ứng với tôm, cua, mực, cá biển"
+2,PEANUT,Đậu phộng / Lạc,Dị ứng các loại hạt đậu phộng
+3,EGG,Trứng,"Dị ứng lòng đỏ/lòng trắng trứng gà, vịt"
+4,LACTOSE,Sữa & Phô mai (Lactose),Bất dung nạp đường lactose trong sữa
+5,SOY,Đậu nành (Soybean),"Dị ứng sản phẩm chế biến từ đậu nành, đậu phụ"
+6,GLUTEN,Gluten / Lúa mì,"Dị ứng gluten trong bánh mì, mì mì phở lúa mì"

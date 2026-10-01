@@ -1,0 +1,41 @@
+﻿food_id,store_name,store_product_name,price_vnd,quantity_g,region,promotion_flag,source_url,normalized_price_per_100g,normalized_price_per_kg
+101,GO! Vietnam,Gạo ST25 5kg,145000,5000,Toàn quốc,False,https://go-vietnam.vn,2900.0,29000.0
+101,WinMart,Gạo Tám Thái 5kg,160000,5000,Hà Nội/HCM,False,https://winmart.vn,3200.0,32000.0
+102,AEON EShop,Gạo lứt đỏ 1kg,42000,1000,Toàn quốc,False,https://aeoneshop.com,4200.0,42000.0
+102,GO! Vietnam,Gạo lứt huyết rồng 1kg,38000,1000,Toàn quốc,True,https://go-vietnam.vn,3800.0,38000.0
+103,GO! Vietnam,Khoai lang mật Đà Lạt 1kg,28000,1000,Toàn quốc,False,https://go-vietnam.vn,2800.0,28000.0
+103,WinMart,Khoai lang vàng WinEco 1kg,30000,1000,Toàn quốc,False,https://winmart.vn,3000.0,30000.0
+104,WinMart,Bún tươi sạch Ba Khánh 500g,12000,500,Toàn quốc,False,https://winmart.vn,2400.0,24000.0
+104,GO! Vietnam,Bún tươi sợi nhỏ gói 500g,11000,500,Toàn quốc,False,https://go-vietnam.vn,2200.0,22000.0
+105,AEON EShop,Yến mạch Úc nguyên chất 500g,42000,500,Toàn quốc,False,https://aeoneshop.com,8400.0,84000.0
+105,WinMart,Yến mạch cán mỏng 400g,36000,400,Toàn quốc,False,https://winmart.vn,9000.0,90000.0
+106,WinMart,Bánh mì baguette 250g,10000,250,Toàn quốc,False,https://winmart.vn,4000.0,40000.0
+106,GO! Vietnam,Bánh mì sandwich gối 275g,16000,275,Toàn quốc,False,https://go-vietnam.vn,5818.181818181818,58181.81818181818
+201,AEON EShop,Ức gà phi lê tươi 500g,45000,500,Toàn quốc,False,https://aeoneshop.com,9000.0,90000.0
+201,WinMart,Ức gà CP 500g,48000,500,Toàn quốc,False,https://winmart.vn,9600.0,96000.0
+201,GO! Vietnam,Ức gà tươi khay 500g,42000,500,Toàn quốc,True,https://go-vietnam.vn,8400.0,84000.0
+202,WinMart,Thịt thăn lợn MeatDeli 400g,62000,400,Toàn quốc,False,https://winmart.vn,15500.0,155000.0
+202,GO! Vietnam,Thịt lợn thăn tươi 1kg,135000,1000,Toàn quốc,False,https://go-vietnam.vn,13500.0,135000.0
+203,AEON EShop,Thịt bò thăn Úc 300g,95000,300,Toàn quốc,False,https://aeoneshop.com,31666.666666666668,316666.6666666667
+204,WinMart,Trứng gà vỉ 10 quả,31000,600,Toàn quốc,False,https://winmart.vn,5166.666666666666,51666.66666666666
+204,GO! Vietnam,Trứng gà Ba Huân 10 quả,28500,600,Toàn quốc,True,https://go-vietnam.vn,4750.0,47500.0
+205,WinMart,Thịt ba chỉ MeatDeli 400g,72000,400,Toàn quốc,False,https://winmart.vn,18000.0,180000.0
+205,GO! Vietnam,Thịt ba chỉ heo tươi 500g,75000,500,Toàn quốc,False,https://go-vietnam.vn,15000.0,150000.0
+301,GO! Vietnam,Cá rô phi làm sạch 1kg,55000,1000,Toàn quốc,False,https://go-vietnam.vn,5500.0,55000.0
+302,AEON EShop,Tôm thẻ chân trắng 500g,98000,500,Toàn quốc,False,https://aeoneshop.com,19600.0,196000.0
+303,AEON EShop,Cá hồi Nauy phi lê tươi 300g,165000,300,Toàn quốc,False,https://aeoneshop.com,55000.0,550000.0
+303,WinMart,Cá hồi Nauy khay 250g,140000,250,Toàn quốc,False,https://winmart.vn,56000.0,560000.0
+304,GO! Vietnam,Cá thu cắt khúc tươi 500g,115000,500,Toàn quốc,False,https://go-vietnam.vn,23000.0,230000.0
+304,AEON EShop,Cá thu tươi làm sạch 400g,96000,400,Toàn quốc,False,https://aeoneshop.com,24000.0,240000.0
+401,WinMart,Rau muống sạch WinEco 500g,15000,500,Toàn quốc,False,https://winmart.vn,3000.0,30000.0
+402,AEON EShop,Súp lơ xanh Đà Lạt 500g,24000,500,Toàn quốc,False,https://aeoneshop.com,4800.0,48000.0
+403,WinMart,Cà rốt Đà Lạt WinEco 500g,14000,500,Toàn quốc,False,https://winmart.vn,2800.0,28000.0
+403,GO! Vietnam,Cà rốt tươi loại 1 1kg,22000,1000,Toàn quốc,False,https://go-vietnam.vn,2200.0,22000.0
+404,WinMart,Đậu phụ làng Mơ 300g,12000,300,Toàn quốc,False,https://winmart.vn,4000.0,40000.0
+405,WinMart,Bắp cải trắng WinEco 1kg,18000,1000,Toàn quốc,False,https://winmart.vn,1800.0,18000.0
+405,GO! Vietnam,Bắp cải thảo/trắng Đà Lạt 1kg,16000,1000,Toàn quốc,True,https://go-vietnam.vn,1600.0,16000.0
+406,WinMart,Cà chua WinEco sạch 500g,14000,500,Toàn quốc,False,https://winmart.vn,2800.0,28000.0
+406,GO! Vietnam,Cà chua tươi khay 1kg,24000,1000,Toàn quốc,False,https://go-vietnam.vn,2400.0,24000.0
+501,GO! Vietnam,Dầu ăn Simply 1 Lit,58000,1000,Toàn quốc,False,https://go-vietnam.vn,5800.0,58000.0
+502,WinMart,Chuối nải 1kg,25000,1000,Toàn quốc,False,https://winmart.vn,2500.0,25000.0
+503,Cửa hàng trà sữa,Trà sữa trân châu size M,45000,500,Toàn quốc,False,https://menu.com,9000.0,90000.0

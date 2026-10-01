@@ -1,0 +1,9 @@
+﻿id,name_vi,meal_type,servings,prep_time_min,cook_time_min,difficulty,description,source_name,tags
+1001,Cơm ức gà áp chảo & rau luộc,LUNCH,1,10,15,Dễ,"Bữa ăn giàu protein, ít chất béo bão hòa thích hợp cho mục tiêu giảm cân và tăng cơ.",NutriDSS Chef,"giảm cân, nhiều protein, ít dầu, nhanh"
+1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,1,15,20,Dễ,"Thực đơn cân bằng dinh dưỡng, giàu chất xơ và đạm từ cá giúp tim mạch khỏe mạnh.",NutriDSS Chef,"cân bằng, giàu xơ, cá tươi, tiết kiệm"
+1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,1,5,15,Rất dễ,"Bữa sáng siêu nhanh, tiết kiệm chi phí nhưng nạp đủ năng lượng bền vững cho buổi sáng.",NutriDSS Chef,"bữa sáng, cực nhanh, giá rẻ, ít calo"
+1004,Bún tôm xào rau muống,LUNCH,1,15,10,Trung bình,Món ăn ngon miệng kết hợp tôm đồng tươi và rau muống giòn.,NutriDSS Chef,"ngon miệng, hải sản, bún"
+1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,1,10,15,Dễ,"Món ăn thanh nhẹ, ít chất béo, dễ chế biến cho gia đình.",NutriDSS Chef,"thịt lợn nạc, thanh nhẹ, gia đình"
+1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,1,5,10,Dễ,Bữa sáng thơm ngon giàu chất xơ và kali tốt cho tiêu hóa.,NutriDSS Chef,"yến mạch, bữa sáng, tiêu hóa"
+1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,1,15,15,Trung bình,"Bữa ăn đậm đà, bổ bổ máu và sắt cho cơ thể vận động nhiều.",NutriDSS Chef,"thịt bò, tăng cơ, giàu sắt"
+1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,1,10,15,Dễ,"Món ăn chay thanh tịnh, tiết kiệm ngân sách nhưng vẫn đầy đủ chất đạm thực vật.",NutriDSS Chef,"ăn chay, tiết kiệm, đậu phụ, thanh tịnh"

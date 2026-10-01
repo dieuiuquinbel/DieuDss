@@ -1,0 +1,68 @@
+{
+    "model_name": "Decision Tree",
+    "trained_at": "2026-10-01T16:57:13.407665",
+    "scikit_learn_version": "1.9.1",
+    "dataset_path": "data/processed/survey_scenarios_dataset.csv",
+    "dataset_samples": 400,
+    "features": [
+        "goal",
+        "budget_vnd",
+        "calories",
+        "protein_g",
+        "carb_g",
+        "fat_g",
+        "estimated_cost_vnd",
+        "cost_ratio"
+    ],
+    "metrics": {
+        "test_r2": 0.9129,
+        "test_mae": 0.2086,
+        "test_rmse": 0.2647,
+        "cv_5fold_r2_mean": 0.8494,
+        "cv_5fold_r2_std": 0.0201
+    },
+    "all_models_summary": [
+        {
+            "model": "Dummy Regressor (Baseline)",
+            "cv_r2_mean": -0.0207,
+            "test_r2": -0.0624,
+            "test_mae": 0.7021,
+            "test_rmse": 0.9245
+        },
+        {
+            "model": "Linear Regression",
+            "cv_r2_mean": 0.5633,
+            "test_r2": 0.5867,
+            "test_mae": 0.4831,
+            "test_rmse": 0.5767
+        },
+        {
+            "model": "KNN Regressor",
+            "cv_r2_mean": 0.7221,
+            "test_r2": 0.8455,
+            "test_mae": 0.2824,
+            "test_rmse": 0.3525
+        },
+        {
+            "model": "Decision Tree",
+            "cv_r2_mean": 0.8494,
+            "test_r2": 0.9129,
+            "test_mae": 0.2086,
+            "test_rmse": 0.2647
+        },
+        {
+            "model": "Random Forest",
+            "cv_r2_mean": 0.8702,
+            "test_r2": 0.9109,
+            "test_mae": 0.2142,
+            "test_rmse": 0.2677
+        },
+        {
+            "model": "ANN (MLPRegressor)",
+            "cv_r2_mean": 0.8519,
+            "test_r2": 0.9011,
+            "test_mae": 0.2235,
+            "test_rmse": 0.2821
+        }
+    ]
+}
