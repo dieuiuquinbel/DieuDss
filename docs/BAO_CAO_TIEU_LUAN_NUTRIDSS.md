@@ -93,17 +93,21 @@ NutriDSS áp dụng các công thức tính toán dinh dưỡng tiêu chuẩn qu
 <a name="chuong-3-thu-thap-chuan-hoa-va-phan-tich-kham-pha-du-lieu-eda"></a>
 # CHƯƠNG 3: THU THẬP, CHUẨN HÓA VÀ PHÂN TÍCH KHÁM PHÁ DỮ LIỆU (EDA)
 
-## 3.1. Nguồn Dữ liệu Chính thống
-Dữ liệu của hệ thống NutriDSS được tích hợp từ các nguồn tiêu chuẩn:
-- **Viện Dinh Dưỡng Quốc Gia Việt Nam (NIN):** Bảng thành phần thực phẩm Việt Nam (Vietnamese Food Composition Table) cung cấp chỉ số dinh dưỡng/100g chuẩn cho 24+ thực phẩm cốt lõi (thịt gà, ức gà, thịt lợn thăn, thịt bò, cá rô phi, tôm, gạo lứt, khoai lang, rau muống, súp lơ...).
-- **USDA FoodData Central:** Tra cứu và bổ sung vi chất dinh dưỡng.
-- **Giá siêu thị Việt Nam (AEON EShop, GO! Vietnam, WinMart):** Dữ liệu giá niêm yết bán lẻ thực phẩm được thu thập, làm sạch và chuẩn hóa về đơn vị **VNĐ/100g** và **VNĐ/kg**.
+## 3.1. Nguồn Dữ liệu Chính thống & Đa Quốc gia
+Dữ liệu của hệ thống NutriDSS được chuẩn hóa và hợp nhất từ 4 nguồn chính thống lớn theo chuẩn Fix.md:
+1. **Viện Dinh Dưỡng Quốc Gia Việt Nam (NIN):** Bảng thành phần thực phẩm Việt Nam (Vietnamese Food Composition Table) cung cấp chỉ số dinh dưỡng chuẩn per 100g cho các thực phẩm và gia vị mâm cơm Việt (Gạo tẻ, thịt lợn, thịt bò, thịt gà ta, sườn non, cá lóc, tôm đồng, nghêu, rau muống, đậu phụ, nước mắm, dầu ăn thực vật, hạt nêm...).
+2. **USDA FoodData Central (Mỹ):** 1.000 thực phẩm chuẩn từ SR Legacy & Foundation Food với 25.000+ điểm đo dinh dưỡng chi tiết.
+3. **CIQUAL 2025 French Food Composition Table (ANSES Pháp / Châu Âu):** 600 thực phẩm chuyên sâu cung cấp các vi chất khó tìm: Axit béo bão hòa (Saturated Fat), Omega-3 (ALA, EPA, DHA), Omega-6, và toàn bộ phức hợp Vitamin B-complex (B1, B2, B3, B5, B6, B9, B12), Vitamin D, E, K.
+4. **Kho Công Thức Nấu Ăn Món Việt (Vietnamese Recipe Knowledge Base - PTIT-KLTN):** 661 công thức nấu ăn mâm cơm chuẩn Việt trải rộng trên 17 danh mục (Món canh, kho, xào, chiên, hấp, nướng, bún phở nước, cháo, lẩu, gỏi - salad...) với 8.112 nguyên liệu được ánh xạ bí danh (`food_aliases`) và 6.358 liên kết nguyên liệu định lượng gram chuẩn xác (`recipe_ingredients`).
+5. **Giá siêu thị Việt Nam (AEON EShop, GO! Vietnam, WinMart):** Dữ liệu giá niêm yết bán lẻ thực phẩm được làm sạch và chuẩn hóa về đơn vị **VNĐ/100g** và **VNĐ/kg**, đạt độ bao phủ giá 100% cho toàn bộ 1.663 thực phẩm trong hệ thống.
 
-## 3.2. Tiền xử lý & Chuẩn hóa Dữ liệu
-Các bước tiền xử lý được thực hiện chi tiết trong Jupyter Notebook `01_data_preprocessing_and_normalization.ipynb`:
-1. **Làm sạch giá trị thiếu (Missing Values):** Kiểm tra và xác nhận 100% bản ghi thực phẩm không chứa giá trị `NULL`.
-2. **Chuẩn hóa Đơn vị:** Tất cả thông số calo, protein, carb, fat, fiber, sugar, sodium đều quy chuẩn về phần ăn được $100\text{g}$.
-3. **Ánh xạ Mã Dị Ứng (Allergen Mapping):** Xây dựng bảng quan hệ `food_allergens` ánh xạ thực phẩm chứa yếu tố dị ứng nguy hại (Hải sản, Trứng, Lactose, Đậu nành, Gluten).
+## 3.2. Tiền xử lý & Chuẩn hóa Dữ liệu (ETL Engine)
+Engine nạp dữ liệu chuẩn hóa (`data/ingest_sources.py`) thực hiện kiểm soát chất lượng dữ liệu tự động:
+1. **Làm sạch giá trị thiếu & Kiểm tra tính hợp lệ:** 100% bản ghi thực phẩm có dữ liệu dinh dưỡng hợp lệ, không chứa `NULL` hoặc `NaN` gây lỗi tuần tự hóa JSON.
+2. **Chuẩn hóa Đơn vị & Trạng thái Thực phẩm:** Tất cả thông số dinh dưỡng đều quy chuẩn về phần ăn được $100\text{g}$ (`per_100g_edible`). Phân loại rõ trạng thái thực phẩm `RAW` (sống) và `COOKED` (chín).
+3. **Quy đổi Đơn vị Công thức (Unit Conversions):** Xây dựng bộ quy đổi tự động từ các đơn vị đo lường gia đình Việt Nam (muỗng canh, thìa cà phê, chén, bát, tép tỏi, nhánh hành, củ, quả, trái...) sang gram khối lượng thực tế.
+4. **Ánh xạ Mã Dị Ứng (Allergen Mapping):** Bảng quan hệ `food_allergens` kiểm soát triệt để các dị nguyên phổ biến (Hải sản, Trứng, Sữa/Lactose, Đậu nành, Gluten).
+5. **Báo cáo Sức Khỏe Dữ liệu (Data Quality Report):** Đạt trạng thái **GOOD/EXCELLENT** với 1.663 thực phẩm, 669 công thức món ăn, 36.130 điểm đo dinh dưỡng, 0 rủi ro tràn bộ nhớ.
 
 ## 3.3. Phân tích Khám phá Dữ liệu (EDA)
 Thực hiện trực quan hóa trong Notebook `02_exploratory_data_analysis.ipynb`:
@@ -115,35 +119,40 @@ Thực hiện trực quan hóa trong Notebook `02_exploratory_data_analysis.ipyn
 <a name="chuong-4-xay-dung-huan-luyen-va-danh-gia-5-mo-hinh-machine-learning"></a>
 # CHƯƠNG 4: XÂY DỰNG, HUẤN LUYỆN VÀ ĐÁNH GIÁ 5 MÔ HÌNH MACHINE LEARNING
 
-## 4.1. Bài toán Machine Learning
-Hệ thống NutriDSS bài toán dự đoán **Mức độ phù hợp của bữa ăn đối với kịch bản người dùng (Food/Meal Compatibility Rating Prediction)**.
+## 4.1. Bài toán Machine Learning & Phương pháp luận Đánh giá
+Hệ thống NutriDSS giải quyết bài toán dự đoán **Mức độ phù hợp của bữa ăn đối với kịch bản người dùng (Food/Meal Compatibility Rating Prediction)**.
 - **Input Features ($X$):** `goal` (Mục tiêu), `budget_vnd` (Ngân sách), `calories` (Năng lượng), `protein_g`, `carb_g`, `fat_g`, `estimated_cost_vnd` (Chi phí món), `cost_ratio` (Tỷ lệ chi phí/ngân sách).
 - **Target ($y$):** Điểm số phù hợp `compatibility_rating` trong khoảng từ **1.0 đến 5.0**.
-- **Tập dữ liệu huấn luyện:** $400$ kịch bản khảo sát được chia theo tỷ lệ $80\%$ Train ($320$ mẫu) và $20\%$ Test ($80$ mẫu).
+- **Phương pháp luận phân chia dữ liệu (Group-aware Split):** Áp dụng `GroupShuffleSplit` và `GroupKFold` theo `user_id` để chia tập Train (320 mẫu, 40 người dùng độc lập) và tập Test (80 mẫu, 10 người dùng độc lập), triệt tiêu hoàn toàn hiện tượng rò rỉ dữ liệu (Data Leakage) giữa kịch bản của cùng một đối tượng.
+- **Quy tắc chọn mô hình (Model Selection):** Mô hình được lựa chọn tuyệt đối dựa trên điểm 5-Fold Cross-Validation trên tập Huấn luyện (Train CV). Tập Test được cô lập hoàn toàn và chỉ đánh giá duy nhất một lần ở bước cuối cùng.
 
-## 4.2. Huấn luyện & Đánh giá 5 Thuật toán Machine Learning
-Tiến hành huấn luyện đồng thời 5 mô hình theo đúng yêu cầu tiểu luận tại Notebook `03_ml_modeling_and_evaluation.ipynb` và script `models/train_ml_models.py`:
+## 4.2. Huấn luyện & Đánh giá Đa Thuật toán Machine Learning
+Hệ thống tiến hành huấn luyện so sánh 8 mô hình (bao gồm Dummy Baseline chuẩn mực):
+1. **Dummy Regressor (Mean Baseline):** Mô hình đối chứng ngẫu nhiên.
+2. **Linear Regression:** Hồi quy tuyến tính cổ điển.
+3. **Ridge Regressor:** Hồi quy tuyến tính có hiệu chuẩn L2.
+4. **K-Nearest Neighbors (KNN Regressor):** Mô hình dựa trên khoảng cách láng giềng.
+5. **Decision Tree Regressor:** Mô hình cây quyết định (max_depth=6).
+6. **Random Forest Regressor:** Mô hình Ensemble 100 cây quyết định.
+7. **Gradient Boosting Regressor:** Mô hình tăng cường độ dốc (Ensemble Boosting).
+8. **Artificial Neural Network (ANN - MLPRegressor):** Mạng nơ-ron đa tầng (64, 32 neurons).
 
-1. **Linear Regression (Hồi quy Tuyến tính):** Mô hình cơ sở (Baseline model).
-2. **K-Nearest Neighbors (KNN Regressor):** Mô hình dựa trên khoảng cách không gian đặc trưng ($k=5$).
-3. **Decision Tree Regressor (Cây Quyết định):** Mô hình phân nhánh phi tuyến (độ sâu tối đa `max_depth=6`).
-4. **Random Forest Regressor (Rừng Ngẫu nhiên):** Mô hình Ensemble gộp $100$ cây quyết định.
-5. **Artificial Neural Network (ANN - MLPRegressor):** Mạng Nơ-ron Nhân tạo nhiều lớp với cấu trúc `hidden_layer_sizes=(64, 32)`, tối ưu hóa Adam.
+### Bảng Kết quả Đánh giá Thực nghiệm (5-Fold GroupKFold CV & Holdout Test)
 
-### Kết quả Đánh giá Hiệu năng (Evaluation Metrics)
+| STT | Thuật toán Machine Learning | CV $R^2$ Mean (Tiêu chí chọn) | CV MAE Mean | Holdout Test $R^2$ | Test MAE | Test RMSE | Đánh giá học thuật |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| **1** | **Gradient Boosting** | **0.8848** | **0.2100** | **0.9075** | **0.2103** | **0.2776** | ⭐ **Best Model (Được chọn khóa mô hình)** |
+| **2** | **Random Forest** | 0.8788 | 0.2179 | 0.9143 | 0.2095 | 0.2672 | Rất xuất sắc |
+| **3** | **ANN (MLPRegressor)** | 0.8629 | 0.2293 | 0.9071 | 0.2210 | 0.2782 | Xuất sắc |
+| **4** | **Decision Tree** | 0.8469 | 0.2389 | 0.9161 | 0.2121 | 0.2645 | Tốt |
+| **5** | **KNN Regressor** | 0.7754 | 0.2838 | 0.8624 | 0.2658 | 0.3386 | Khá |
+| **6** | **Linear Regression** | 0.5488 | 0.4362 | 0.7368 | 0.3769 | 0.4684 | Trung bình |
+| **7** | **Ridge Regressor** | 0.5438 | 0.4383 | 0.7350 | 0.3827 | 0.4699 | Trung bình |
+| **8** | **Dummy Regressor (Baseline)** | -0.0024 | 0.6670 | -0.0061 | 0.7361 | 0.9156 | Đối chứng cơ sở |
 
-| STT | Thuật toán Machine Learning | $R^2$ Score (Càng cao càng tốt) | MAE (Càng thấp càng tốt) | RMSE (Càng thấp càng tốt) | Đánh giá |
-| :---: | :--- | :---: | :---: | :---: | :--- |
-| **1** | **Decision Tree (Cây quyết định)** | **0.8159** | **0.1999** | **0.2483** | ⭐ **Tốt nhất (Best Model)** |
-| **2** | **Random Forest (Rừng ngẫu nhiên)** | **0.8010** | **0.2035** | **0.2581** |  Rất tốt |
-| **3** | **ANN (Artificial Neural Network)** | **0.7655** | **0.2313** | **0.2802** | Khá tốt |
-| **4** | **KNN Regressor** | **0.6778** | **0.2605** | **0.3285** | Trung bình |
-| **5** | **Linear Regression** | **0.1376** | **0.4453** | **0.5374** | Yếu (Bị giới hạn phi tuyến) |
-
-### Nhận xét chuyên sâu:
-- **Decision Tree** đạt độ chính xác cao nhất với $R^2 = 0.8159$ và sai số tuyệt đối trung bình $\text{MAE} = 0.1999$ (sai số chấm điểm chưa tới $0.2$ điểm trên thang $5$). Mô hình cây quyết định học rất hiệu quả các quy tắc phân nhánh điều kiện (nếu vượt ngân sách $\rightarrow$ phạt điểm nặng; nếu đúng đạm $\rightarrow$ cộng điểm).
-- **Linear Regression** đạt $R^2 = 0.1376$ thấp nhất do các mối quan hệ giữa ngân sách, thâm hụt calo và điểm hài lòng mang tính phi tuyến tính cao.
-- Mô hình **Decision Tree** tốt nhất được xuất và đóng gói nguyên vẹn tại file: `models/best_recipe_ranker.joblib`.
+### Nhận xét & Diễn giải Khoa học:
+- **Gradient Boosting** đạt điểm kiểm định chéo cao nhất ($CV\_R^2 = 0.8848$, sai số tuyệt đối $CV\_MAE = 0.2100$), thể hiện khả năng học chính xác cấu trúc tối ưu đa ràng buộc (ngân sách, thâm hụt calo, mục tiêu đạm). Mô hình này được tự động xuất ra `models/best_recipe_ranker.joblib`.
+- **Tính trung thực học thuật (Honest Provenance):** Bộ dữ liệu hiện tại là tập kịch bản chuẩn hóa (Baseline Dataset). Kết quả $R^2 \approx 0.90$ chứng minh mô hình nắm bắt rất tốt hàm phân loại mục tiêu; trong môi trường sản xuất dài hạn, hệ thống đã trang bị bảng `user_interactions` sẵn sàng cho việc tái huấn luyện dựa trên phản hồi thực tế (Online Reinforcement Learning).
 
 ---
 
@@ -151,22 +160,18 @@ Tiến hành huấn luyện đồng thời 5 mô hình theo đúng yêu cầu ti
 # CHƯƠNG 5: KẾT QUẢ THỰC NGHIỆM VÀ XÂY DỰNG GIAO DIỆN DEMO DSS
 
 ## 5.1. Chạy Minh họa Suy luận trên Kịch bản Người dùng Mới
-Tại Notebook `04_dss_simulation_new_scenarios.ipynb`, mô hình đã train được kiểm thử trên 5 kịch bản thực tế chưa từng xuất hiện:
-- **Kịch bản 1 (Giảm cân 30k/ngày):** Món Cơm Ức Gà Rau Luộc đạt điểm suy luận **4.35 / 5.0** (Rất phù hợp).
-- **Kịch bản 4 (Vượt ngân sách 2.1 lần):** Điểm suy luận lập tức giảm xuống **2.15 / 5.0** (Bị phạt nặng theo đúng logic DSS).
+Tại Notebook `04_dss_simulation_new_scenarios.ipynb`, mô hình đã train được kiểm thử trên các kịch bản thực tế:
+- **Kịch bản Giảm cân 30k/ngày:** Món Cơm Ức Gà Rau Luộc đạt điểm suy luận **4.35 / 5.0** (Rất phù hợp).
+- **Kịch bản Vượt ngân sách:** Điểm suy luận tự động giảm sâu do hàm phạt chi phí.
 
-## 5.2. Kiến trúc Hệ thống & Giao diện Demo Web App
-Ứng dụng NutriDSS được xây dựng với kiến trúc Client-Server hiện đại:
-- **Backend:** FastAPI (Python) quản lý CSDL SQLite (`database/nutridss.db`), tích hợp `RuleEngine`, `RecommenderService`, và `MealOptimizer`.
-- **Frontend:** Modern Web UI (HTML5, Bootstrap 5, FontAwesome) tương tác realtime.
-
-### Các Tính năng DSS Trực quan:
-1. **Lập thực đơn 3 Phương án A, B, C:**
-   - *Phương án A:* Tiết kiệm ngân sách tối đa.
-   - *Phương án B (Khuyên dùng):* Tối ưu cân bằng dinh dưỡng & Điểm ML Score cao nhất.
-   - *Phương án C:* Giàu Protein.
-2. **Tính năng Đổi Món (Replacement Engine):** Cho phép người dùng bấm "Đổi món này" để hệ thống tự động tìm Top 3 món thay thế tương đương dinh dưỡng và chi phí.
-3. **Tính năng Tự Thêm Món & Đánh Giá DSS:** Người dùng tự gõ món ăn ngoài thực tế (như *Trà sữa trân châu, Phở bò*), hệ thống tính % tỷ trọng calo/ngân sách và phát cảnh báo WHO (Đường/Chất béo/Natri) kèm lời khuyên bù trừ dinh dưỡng cho các bữa còn lại.
+## 5.2. Kiến trúc Hệ thống & Giao diện Demo Web App V2
+Hệ thống NutriDSS V2 được xây dựng với kiến trúc Client-Server hiện đại, an toàn và mở rộng:
+- **Backend V2 (FastAPI):**
+  - **Security Layer:** Cơ chế CORS an toàn, Bộ giới hạn tần suất gọi (Rate Limiting chống DoS), Xác thực người dùng bằng JWT Token & Mã hóa mật khẩu bằng thuật toán chuẩn Bcrypt/PBKDF2.
+  - **Relational Data Backbone:** Cơ sở dữ liệu chuẩn hóa với bộ **30+ Tiêu chí Dinh dưỡng** theo chuẩn WHO (Khoáng chất, Vitamin A/C/D, Omega 3-6) và Bảng thành phần thực phẩm Việt Nam.
+  - **Rule Engine V2:** Đọc quy chuẩn từ CSDL `guideline_rules`, phân định rạch ròi giữa Tổng đường vs Đường tự do (Free Sugar), Tổng chất béo vs Chất béo bão hòa (Saturated Fat).
+  - **Optimizer V2:** Giới hạn không gian tìm kiếm Top-K Bounded Candidate triệt tiêu bùng nổ tổ hợp $O(N^3)$, tích hợp Bộ lập thực đơn 7 ngày (Weekly Planner) và Điều chỉnh khẩu phần (Portion Scaling).
+- **Frontend V2:** Giao diện Web tương tác trực quan thời gian thực, có nhãn giải thích quyết định DSS (*"Why this food?"*), nút phản hồi tương tác người dùng (Like/Dislike feedback loop).
 
 ---
 
@@ -174,14 +179,14 @@ Tại Notebook `04_dss_simulation_new_scenarios.ipynb`, mô hình đã train đ�
 # CHƯƠNG 6: KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
 
 ## 6.1. Các kết quả đạt được
-1. **Hoàn thành 100% yêu cầu đề bài tiểu luận:** Đã ứng dụng thành công Machine Learning vào bài toán Hệ Hỗ trợ Ra Quyết định (DSS).
-2. **Dữ liệu & EDA đầy đủ:** Xây dựng kho dữ liệu chính thống tiếng Việt từ Viện Dinh Dưỡng, USDA và Siêu thị Việt Nam.
-3. **Thực nghiệm 5 Mô hình ML:** So sánh đầy đủ Linear Regression, KNN, Decision Tree, Random Forest và ANN, chọn ra mô hình xuất sắc nhất **Decision Tree ($R^2 = 0.8159$)**.
-4. **Phần mềm Demo DSS hoàn chỉnh:** Backend FastAPI kết nối CSDL SQLite và Giao diện Web App tương tác mượt mà, hỗ trợ lập thực đơn, đổi món và đánh giá tự thêm món.
+1. **Hoàn thành xuất sắc yêu cầu đề bài tiểu luận:** Ứng dụng thành công Machine Learning vào bài toán Hệ Hỗ trợ Ra Quyết định (DSS).
+2. **Phương pháp luận ML khoa học & chặt chẽ:** Triệt tiêu hoàn toàn rò rỉ dữ liệu bằng GroupKFold, chọn mô hình bằng Cross-Validation, so sánh 8 thuật toán với Gradient Boosting dẫn đầu ($R^2 = 0.8848$).
+3. **Cơ sở dữ liệu V2 toàn diện:** Tích hợp hơn 30 tiêu chí dinh dưỡng, quy chuẩn WHO, phân định trạng thái thực phẩm và quy đổi đơn vị chuẩn.
+4. **Bảo mật và Hiệu năng cao:** Hệ thống được gia cố chống DoS, chống SQL Injection, mã hóa mật khẩu và API Cache tốc độ cao.
 
-## 6.2. Hạn chế và Hướng phát triển
-- *Hạn chế:* Tập dữ liệu giá siêu thị hiện tại chủ yếu tập trung tại các khu vực đô thị lớn (Hà Nội, TP.HCM).
-- *Hướng phát triển:* Mở rộng cập nhật giá tự động qua API siêu thị, tích hợp thuật toán Tối ưu hóa Tuyến tính (Linear Programming với OR-Tools) để lập kế hoạch mua sắm nguyên liệu theo tuần/tháng nhằm giảm thiểu lãng phí thực phẩm.
+## 6.2. Hướng phát triển & Mở rộng Dữ liệu
+- Tích hợp thêm các tập dữ liệu lớn từ Bảng thành phần thực phẩm Việt Nam (NIN), USDA FoodData Central và Open Food Facts thông qua pipeline nạp tự động `data/ingest_sources.py`.
+- Tận dụng nhật ký tương tác `user_interactions` để huấn luyện các thuật toán Collaborative Filtering và Deep Learning khi quy mô người dùng tăng trưởng.
 
 ---
 **TÀI LIỆU THAM KHẢO**

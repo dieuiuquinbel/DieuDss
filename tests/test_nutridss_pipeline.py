@@ -132,11 +132,11 @@ def test_unknown_allergen_hard_constraint():
 def test_budget_constraints():
     optimizer = MealOptimizer()
     
-    # Ngân sách 30.000đ/ngày (thấp hơn chi phí thực tế tối thiểu ~50.682đ)
-    res_low = optimizer.generate_daily_plan_options("LOSE_WEIGHT", 30000.0)
+    # Ngân sách 10.000đ/ngày (thấp hơn chi phí thực tế tối thiểu 3 bữa ~14.192đ)
+    res_low = optimizer.generate_daily_plan_options("LOSE_WEIGHT", 10000.0)
     assert res_low["is_budget_strictly_feasible"] is False
     assert res_low["budget_warning"] is not None
-    assert "30,000" in res_low["budget_warning"]
+    assert "10,000" in res_low["budget_warning"]
 
     # Ngân sách 70.000đ/ngày (khả thi)
     res_ok = optimizer.generate_daily_plan_options("LOSE_WEIGHT", 70000.0)
@@ -183,3 +183,80 @@ def test_all_foods_have_prices():
     
     missing = df_f[~df_f['id'].isin(df_p['food_id'])]
     assert len(missing) == 0, f"Còn {len(missing)} thực phẩm bị thiếu giá: {missing['canonical_name_vi'].tolist()}"
+
+# 12. Test User Registration, Password Hashing & Authentication
+def test_auth_and_security():
+    # Register test user
+    test_email = "testuser_v2@nutridss.vn"
+    res_reg = client.post("/api/auth/register", json={
+        "email": test_email,
+        "username": "testuser_v2",
+        "password": "SecurePassword@123"
+    })
+    # Accept 200 or 400 if user already registered in previous run
+    assert res_reg.status_code in (200, 400)
+    
+    # Login with wrong password
+    res_wrong = client.post("/api/auth/login", json={
+        "username": "testuser_v2",
+        "password": "WrongPassword!"
+    })
+    assert res_wrong.status_code == 401
+    
+    # Login with correct password
+    res_ok = client.post("/api/auth/login", json={
+        "username": "testuser_v2",
+        "password": "SecurePassword@123"
+    })
+    assert res_ok.status_code == 200
+    token = res_ok.json()["access_token"]
+    
+    # Access protected profile
+    res_me = client.get("/api/auth/me", headers={"Authorization": f"Bearer {token}"})
+    assert res_me.status_code == 200
+    assert res_me.json()["username"] == "testuser_v2"
+
+# 13. Test Weekly Meal Plan Generation
+def test_weekly_meal_plan_api():
+    res = client.post("/api/meal-plans/weekly", json={
+        "health_goal": "LOSE_WEIGHT",
+        "daily_budget_vnd": 75000.0,
+        "allergies": []
+    })
+    assert res.status_code == 200
+    data = res.json()
+    assert data["days_count"] == 7
+    assert len(data["days"]) == 7
+    assert data["weekly_budget_vnd"] == 75000.0 * 7
+
+# 14. Test Portion Scaling
+def test_portion_scaling_api():
+    res = client.post("/api/meal-plans/scale-portion", json={
+        "recipe_id": 1001,
+        "multiplier": 1.5
+    })
+    assert res.status_code == 200
+    scaled = res.json()
+    assert scaled["portion_multiplier"] == 1.5
+    assert scaled["calories"] > 0
+
+# 15. Test Real User Feedback Tracking
+def test_user_feedback_api():
+    res = client.post("/api/feedback", json={
+        "recipe_id": 1001,
+        "event_type": "FAVORITE",
+        "rating": 5.0,
+        "session_id": "sess_test_123"
+    })
+    assert res.status_code == 200
+    assert res.json()["status"] == "success"
+
+# 16. Test 30+ Nutrients & WHO Guidelines APIs
+def test_guidelines_and_nutrients_api():
+    res_g = client.get("/api/guidelines")
+    assert res_g.status_code == 200
+    assert len(res_g.json()["rules"]) >= 5
+
+    res_n = client.get("/api/nutrients")
+    assert res_n.status_code == 200
+    assert len(res_n.json()) >= 30, "Phải có đủ bộ 30+ tiêu chí dinh dưỡng theo Fix.md"

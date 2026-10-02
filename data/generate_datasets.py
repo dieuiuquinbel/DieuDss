@@ -4,8 +4,15 @@ Tạo bộ dữ liệu chuẩn hóa chính thống từ Viện Dinh Dưỡng VN,
 """
 
 import os
+import sys
 import pandas as pd
 import numpy as np
+
+if sys.stdout.encoding != 'utf-8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
 
 # Tạo thư mục dữ liệu nếu chưa có
 os.makedirs("data/processed", exist_ok=True)
@@ -367,10 +374,19 @@ for i in range(1, 401):
     })
 
 df_scenarios = pd.DataFrame(scenarios)
+df_scenarios.to_csv("data/processed/synthetic_baseline_dataset.csv", index=False, encoding="utf-8-sig")
+# Keep survey_scenarios_dataset.csv for backward compatibility
 df_scenarios.to_csv("data/processed/survey_scenarios_dataset.csv", index=False, encoding="utf-8-sig")
 
-print("✅ ĐÃ KHỞI TẠO THÀNH CÔNG BỘ DỮ LIỆU NUTRIDSS CHUẨN HÓA:")
+# Initialize Real User Interaction Feedback Schema (Fix.md Section 19)
+df_interactions = pd.DataFrame(columns=[
+    "id", "user_id", "recipe_id", "food_id", "event_type", "rating", "session_id", "metadata_json", "created_at"
+])
+df_interactions.to_csv("data/processed/user_interactions.csv", index=False, encoding="utf-8-sig")
+
+print("[SUCCESS] ĐÃ KHỞI TẠO THÀNH CÔNG BỘ DỮ LIỆU NUTRIDSS CHUẨN HÓA:")
 print(f" - Food Master: {len(df_foods)} thực phẩm")
 print(f" - Price Records: {len(df_prices)} bản ghi từ AEON, GO!, WinMart")
 print(f" - Recipe Master: {len(recipes)} món ăn chuẩn")
-print(f" - ML Training Dataset: {len(df_scenarios)} mẫu kịch bản khảo sát")
+print(f" - ML Training Baseline Dataset: {len(df_scenarios)} mẫu kịch bản baseline")
+print(" - Real User Interactions Table initialized for online learning.")

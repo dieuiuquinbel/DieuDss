@@ -1,8 +1,10 @@
 {
-    "model_name": "Decision Tree",
-    "trained_at": "2026-10-01T16:57:13.407665",
+    "model_name": "Gradient Boosting",
+    "model_selection_strategy": "Best 5-Fold GroupKFold Cross-Validation R2 on Train Set",
+    "trained_at": "2026-10-01T23:11:00.982180",
     "scikit_learn_version": "1.9.1",
-    "dataset_path": "data/processed/survey_scenarios_dataset.csv",
+    "dataset_path": "data/processed/synthetic_baseline_dataset.csv",
+    "dataset_type": "synthetic_baseline_dataset",
     "dataset_samples": 400,
     "features": [
         "goal",
@@ -15,54 +17,78 @@
         "cost_ratio"
     ],
     "metrics": {
-        "test_r2": 0.9129,
-        "test_mae": 0.2086,
-        "test_rmse": 0.2647,
-        "cv_5fold_r2_mean": 0.8494,
-        "cv_5fold_r2_std": 0.0201
+        "cv_5fold_r2_mean": 0.8848,
+        "cv_5fold_r2_std": 0.0209,
+        "cv_5fold_mae_mean": 0.21,
+        "test_r2": 0.9075,
+        "test_mae": 0.2103,
+        "test_rmse": 0.2776
     },
+    "evaluation_note": "Model is trained and benchmarked on synthetic baseline scenario data. Metrics reflect the algorithm's capability to learn heuristic fitness functions. Real-world recommendation accuracy will be evaluated on production user interaction logs.",
     "all_models_summary": [
         {
             "model": "Dummy Regressor (Baseline)",
-            "cv_r2_mean": -0.0207,
-            "test_r2": -0.0624,
-            "test_mae": 0.7021,
-            "test_rmse": 0.9245
+            "cv_r2_mean": -0.0024,
+            "cv_mae_mean": 0.667,
+            "test_r2": -0.0061,
+            "test_mae": 0.7361,
+            "test_rmse": 0.9156
         },
         {
             "model": "Linear Regression",
-            "cv_r2_mean": 0.5633,
-            "test_r2": 0.5867,
-            "test_mae": 0.4831,
-            "test_rmse": 0.5767
+            "cv_r2_mean": 0.5488,
+            "cv_mae_mean": 0.4362,
+            "test_r2": 0.7368,
+            "test_mae": 0.3769,
+            "test_rmse": 0.4684
+        },
+        {
+            "model": "Ridge Regressor",
+            "cv_r2_mean": 0.5438,
+            "cv_mae_mean": 0.4383,
+            "test_r2": 0.735,
+            "test_mae": 0.3827,
+            "test_rmse": 0.4699
         },
         {
             "model": "KNN Regressor",
-            "cv_r2_mean": 0.7221,
-            "test_r2": 0.8455,
-            "test_mae": 0.2824,
-            "test_rmse": 0.3525
+            "cv_r2_mean": 0.7754,
+            "cv_mae_mean": 0.2838,
+            "test_r2": 0.8624,
+            "test_mae": 0.2658,
+            "test_rmse": 0.3386
         },
         {
             "model": "Decision Tree",
-            "cv_r2_mean": 0.8494,
-            "test_r2": 0.9129,
-            "test_mae": 0.2086,
-            "test_rmse": 0.2647
+            "cv_r2_mean": 0.8469,
+            "cv_mae_mean": 0.2389,
+            "test_r2": 0.9161,
+            "test_mae": 0.2121,
+            "test_rmse": 0.2645
         },
         {
             "model": "Random Forest",
-            "cv_r2_mean": 0.8702,
-            "test_r2": 0.9109,
-            "test_mae": 0.2142,
-            "test_rmse": 0.2677
+            "cv_r2_mean": 0.8788,
+            "cv_mae_mean": 0.2179,
+            "test_r2": 0.9143,
+            "test_mae": 0.2095,
+            "test_rmse": 0.2672
+        },
+        {
+            "model": "Gradient Boosting",
+            "cv_r2_mean": 0.8848,
+            "cv_mae_mean": 0.21,
+            "test_r2": 0.9075,
+            "test_mae": 0.2103,
+            "test_rmse": 0.2776
         },
         {
             "model": "ANN (MLPRegressor)",
-            "cv_r2_mean": 0.8519,
-            "test_r2": 0.9011,
-            "test_mae": 0.2235,
-            "test_rmse": 0.2821
+            "cv_r2_mean": 0.8629,
+            "cv_mae_mean": 0.2293,
+            "test_r2": 0.9071,
+            "test_mae": 0.221,
+            "test_rmse": 0.2782
         }
     ]
 }

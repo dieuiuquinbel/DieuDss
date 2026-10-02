@@ -1,0 +1,401 @@
+﻿scenario_id,user_id,goal,budget_vnd,recipe_id,recipe_name,meal_type,calories,protein_g,carb_g,fat_g,estimated_cost_vnd,cost_ratio,compatibility_rating
+1,2,MAINTAIN,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,4.02
+2,3,MAINTAIN,40000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.27,4.38
+3,4,MAINTAIN,70000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.44,4.69
+4,5,GAIN_WEIGHT,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,4.89
+5,6,GAIN_WEIGHT,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,3.51
+6,7,MAINTAIN,30000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.64,1.98
+7,8,HIGH_PROTEIN,50000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.29,3.36
+8,9,HIGH_PROTEIN,50000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.52,4.91
+9,10,HIGH_PROTEIN,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,4.54
+10,11,LOSE_WEIGHT,20000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.53,4.17
+11,12,MAINTAIN,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,3.74
+12,13,LOSE_WEIGHT,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,5.0
+13,14,HIGH_PROTEIN,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,3.04
+14,15,LOSE_WEIGHT,40000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.23,2.58
+15,16,GAIN_WEIGHT,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,3.71
+16,17,GAIN_WEIGHT,30000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.86,4.39
+17,18,HIGH_PROTEIN,70000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.31,5.0
+18,19,HIGH_PROTEIN,50000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.21,3.34
+19,20,LOSE_WEIGHT,70000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.44,4.43
+20,21,LOSE_WEIGHT,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.62
+21,22,LOSE_WEIGHT,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,3.92
+22,23,LOSE_WEIGHT,70000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.7,3.78
+23,24,LOSE_WEIGHT,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,4.45
+24,25,MAINTAIN,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,4.52
+25,26,LOSE_WEIGHT,40000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.55,4.75
+26,27,LOSE_WEIGHT,50000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.21,4.14
+27,28,MAINTAIN,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,1.95
+28,29,HIGH_PROTEIN,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,5.0
+29,30,MAINTAIN,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,4.51
+30,31,LOSE_WEIGHT,40000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.23,2.69
+31,32,LOSE_WEIGHT,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,4.39
+32,33,MAINTAIN,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,4.68
+33,34,LOSE_WEIGHT,30000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.73,4.82
+34,35,HIGH_PROTEIN,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,3.23
+35,36,HIGH_PROTEIN,50000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.62,5.0
+36,37,LOSE_WEIGHT,40000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.71,4.89
+37,38,LOSE_WEIGHT,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,4.33
+38,39,MAINTAIN,50000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.98,4.45
+39,40,GAIN_WEIGHT,30000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.48,3.63
+40,41,GAIN_WEIGHT,50000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.52,4.99
+41,42,HIGH_PROTEIN,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,5.0
+42,43,HIGH_PROTEIN,20000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.53,3.34
+43,44,MAINTAIN,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.54
+44,45,LOSE_WEIGHT,50000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.57,4.47
+45,46,LOSE_WEIGHT,20000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.52,4.08
+46,47,MAINTAIN,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,1.87
+47,48,GAIN_WEIGHT,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,3.23
+48,49,HIGH_PROTEIN,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,5.0
+49,50,GAIN_WEIGHT,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,3.94
+50,1,GAIN_WEIGHT,50000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.21,3.46
+51,2,HIGH_PROTEIN,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,4.5
+52,3,HIGH_PROTEIN,20000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,1.42,3.66
+53,4,MAINTAIN,20000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.52,4.28
+54,5,MAINTAIN,70000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.7,4.39
+55,6,HIGH_PROTEIN,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,3.66
+56,7,LOSE_WEIGHT,50000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.52,3.87
+57,8,GAIN_WEIGHT,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,4.65
+58,9,LOSE_WEIGHT,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,4.13
+59,10,HIGH_PROTEIN,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,4.83
+60,11,HIGH_PROTEIN,20000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,1.42,4.09
+61,12,LOSE_WEIGHT,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,4.78
+62,13,MAINTAIN,50000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.98,4.32
+63,14,HIGH_PROTEIN,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,3.48
+64,15,MAINTAIN,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,4.06
+65,16,HIGH_PROTEIN,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,5.0
+66,17,MAINTAIN,30000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.36,4.45
+67,18,HIGH_PROTEIN,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,3.42
+68,19,GAIN_WEIGHT,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.92
+69,20,MAINTAIN,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,3.87
+70,21,LOSE_WEIGHT,50000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.98,3.63
+71,22,LOSE_WEIGHT,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,4.26
+72,23,LOSE_WEIGHT,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,3.65
+73,24,MAINTAIN,40000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.55,4.23
+74,25,LOSE_WEIGHT,50000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.21,4.57
+75,26,MAINTAIN,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.4
+76,27,LOSE_WEIGHT,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.62
+77,28,HIGH_PROTEIN,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,2.58
+78,29,LOSE_WEIGHT,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,1.1
+79,30,HIGH_PROTEIN,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,3.3
+80,31,HIGH_PROTEIN,50000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.52,5.0
+81,32,HIGH_PROTEIN,40000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.55,5.0
+82,33,HIGH_PROTEIN,40000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.27,3.77
+83,34,MAINTAIN,70000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.44,4.53
+84,35,MAINTAIN,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.29
+85,36,LOSE_WEIGHT,20000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.52,4.23
+86,37,LOSE_WEIGHT,50000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.98,4.28
+87,38,LOSE_WEIGHT,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,4.67
+88,39,HIGH_PROTEIN,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,4.02
+89,40,HIGH_PROTEIN,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,4.65
+90,41,GAIN_WEIGHT,40000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.27,3.44
+91,42,HIGH_PROTEIN,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,3.1
+92,43,GAIN_WEIGHT,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,4.79
+93,44,MAINTAIN,40000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.26,4.06
+94,45,LOSE_WEIGHT,40000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.23,2.47
+95,46,HIGH_PROTEIN,30000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.48,3.48
+96,47,GAIN_WEIGHT,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,4.72
+97,48,HIGH_PROTEIN,30000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.73,5.0
+98,49,GAIN_WEIGHT,30000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.36,3.21
+99,50,LOSE_WEIGHT,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.94
+100,1,MAINTAIN,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,4.12
+101,2,GAIN_WEIGHT,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,3.58
+102,3,LOSE_WEIGHT,50000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.98,3.66
+103,4,GAIN_WEIGHT,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,3.2
+104,5,HIGH_PROTEIN,50000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.52,5.0
+105,6,MAINTAIN,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,3.91
+106,7,MAINTAIN,40000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.27,4.8
+107,8,LOSE_WEIGHT,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,3.94
+108,9,GAIN_WEIGHT,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.79
+109,10,GAIN_WEIGHT,20000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.52,3.28
+110,11,LOSE_WEIGHT,70000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.7,3.52
+111,12,HIGH_PROTEIN,50000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.29,3.29
+112,13,GAIN_WEIGHT,70000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.37,4.83
+113,14,HIGH_PROTEIN,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,5.0
+114,15,HIGH_PROTEIN,50000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.21,3.12
+115,16,HIGH_PROTEIN,70000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.44,5.0
+116,17,MAINTAIN,50000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.57,4.18
+117,18,GAIN_WEIGHT,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,3.63
+118,19,LOSE_WEIGHT,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,1.52
+119,20,GAIN_WEIGHT,30000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.48,3.38
+120,21,GAIN_WEIGHT,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,3.36
+121,22,HIGH_PROTEIN,70000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.31,5.0
+122,23,GAIN_WEIGHT,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,3.91
+123,24,MAINTAIN,40000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.78,4.12
+124,25,LOSE_WEIGHT,20000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,1.42,2.93
+125,26,LOSE_WEIGHT,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,4.41
+126,27,HIGH_PROTEIN,30000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.64,3.08
+127,28,GAIN_WEIGHT,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,3.18
+128,29,GAIN_WEIGHT,70000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.37,4.67
+129,30,MAINTAIN,30000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.73,4.69
+130,31,GAIN_WEIGHT,50000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.21,3.83
+131,32,MAINTAIN,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,3.9
+132,33,LOSE_WEIGHT,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,5.0
+133,34,LOSE_WEIGHT,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,4.44
+134,35,GAIN_WEIGHT,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,2.44
+135,36,HIGH_PROTEIN,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,3.45
+136,37,MAINTAIN,50000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.52,4.56
+137,38,LOSE_WEIGHT,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,4.33
+138,39,HIGH_PROTEIN,40000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.27,3.42
+139,40,LOSE_WEIGHT,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.55
+140,41,LOSE_WEIGHT,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,4.95
+141,42,HIGH_PROTEIN,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,3.33
+142,43,MAINTAIN,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,1.89
+143,44,GAIN_WEIGHT,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,3.35
+144,45,HIGH_PROTEIN,30000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.86,5.0
+145,46,LOSE_WEIGHT,30000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.73,5.0
+146,47,HIGH_PROTEIN,20000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.53,3.38
+147,48,LOSE_WEIGHT,70000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.44,4.59
+148,49,LOSE_WEIGHT,40000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.71,4.66
+149,50,LOSE_WEIGHT,40000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.26,3.85
+150,1,MAINTAIN,70000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.7,3.99
+151,2,HIGH_PROTEIN,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,3.59
+152,3,MAINTAIN,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,3.33
+153,4,GAIN_WEIGHT,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,4.03
+154,5,LOSE_WEIGHT,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,5.0
+155,6,MAINTAIN,40000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.78,4.38
+156,7,HIGH_PROTEIN,50000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.57,5.0
+157,8,MAINTAIN,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,4.1
+158,9,MAINTAIN,50000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.98,4.82
+159,10,LOSE_WEIGHT,50000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.29,4.59
+160,11,MAINTAIN,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,3.32
+161,12,MAINTAIN,70000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.31,4.38
+162,13,MAINTAIN,30000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.36,4.72
+163,14,MAINTAIN,50000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.62,4.52
+164,15,LOSE_WEIGHT,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,4.92
+165,16,GAIN_WEIGHT,70000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.15,3.37
+166,17,MAINTAIN,30000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.64,1.75
+167,18,GAIN_WEIGHT,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,3.1
+168,19,HIGH_PROTEIN,70000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.37,5.0
+169,20,LOSE_WEIGHT,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,4.87
+170,21,LOSE_WEIGHT,50000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.21,4.25
+171,22,HIGH_PROTEIN,50000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.62,4.59
+172,23,GAIN_WEIGHT,40000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.71,5.0
+173,24,MAINTAIN,40000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.26,4.16
+174,25,GAIN_WEIGHT,30000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.64,2.12
+175,26,HIGH_PROTEIN,50000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.29,3.46
+176,27,MAINTAIN,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,3.25
+177,28,MAINTAIN,70000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.31,4.17
+178,29,HIGH_PROTEIN,20000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.53,2.95
+179,30,LOSE_WEIGHT,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.89
+180,31,LOSE_WEIGHT,50000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.57,4.8
+181,32,MAINTAIN,40000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.26,4.31
+182,33,LOSE_WEIGHT,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,1.42
+183,34,GAIN_WEIGHT,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,3.8
+184,35,HIGH_PROTEIN,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,4.37
+185,36,MAINTAIN,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,4.08
+186,37,LOSE_WEIGHT,30000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.36,4.24
+187,38,HIGH_PROTEIN,50000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.62,4.57
+188,39,GAIN_WEIGHT,50000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.57,4.57
+189,40,HIGH_PROTEIN,70000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.15,3.39
+190,41,LOSE_WEIGHT,70000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.7,4.07
+191,42,HIGH_PROTEIN,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,3.08
+192,43,GAIN_WEIGHT,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,4.82
+193,44,LOSE_WEIGHT,30000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.73,5.0
+194,45,LOSE_WEIGHT,30000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.36,3.87
+195,46,GAIN_WEIGHT,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,3.98
+196,47,HIGH_PROTEIN,20000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,1.42,3.59
+197,48,GAIN_WEIGHT,20000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.52,3.59
+198,49,MAINTAIN,70000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.7,4.3
+199,50,GAIN_WEIGHT,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,3.47
+200,1,MAINTAIN,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,3.43
+201,2,LOSE_WEIGHT,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,4.8
+202,3,LOSE_WEIGHT,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,4.31
+203,4,LOSE_WEIGHT,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,4.28
+204,5,GAIN_WEIGHT,20000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,1.42,3.3
+205,6,GAIN_WEIGHT,20000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.52,3.53
+206,7,GAIN_WEIGHT,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,2.53
+207,8,LOSE_WEIGHT,30000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.48,4.09
+208,9,GAIN_WEIGHT,30000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.86,4.62
+209,10,GAIN_WEIGHT,40000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.55,4.99
+210,11,GAIN_WEIGHT,50000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.21,3.52
+211,12,LOSE_WEIGHT,40000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.78,4.54
+212,13,MAINTAIN,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,4.23
+213,14,LOSE_WEIGHT,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,4.35
+214,15,GAIN_WEIGHT,30000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.64,2.5
+215,16,GAIN_WEIGHT,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,3.56
+216,17,LOSE_WEIGHT,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,2.31
+217,18,HIGH_PROTEIN,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,5.0
+218,19,LOSE_WEIGHT,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,3.83
+219,20,LOSE_WEIGHT,50000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.62,5.0
+220,21,LOSE_WEIGHT,50000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.57,4.76
+221,22,HIGH_PROTEIN,70000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.15,3.3
+222,23,LOSE_WEIGHT,40000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.23,2.72
+223,24,MAINTAIN,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,4.39
+224,25,HIGH_PROTEIN,50000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.52,4.87
+225,26,HIGH_PROTEIN,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,4.49
+226,27,LOSE_WEIGHT,30000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.36,4.54
+227,28,LOSE_WEIGHT,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,4.54
+228,29,GAIN_WEIGHT,50000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.57,4.57
+229,30,GAIN_WEIGHT,70000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.15,3.51
+230,31,LOSE_WEIGHT,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,1.18
+231,32,HIGH_PROTEIN,30000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.48,3.0
+232,33,GAIN_WEIGHT,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,3.23
+233,34,MAINTAIN,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,3.74
+234,35,MAINTAIN,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,4.79
+235,36,LOSE_WEIGHT,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,4.43
+236,37,MAINTAIN,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.31
+237,38,HIGH_PROTEIN,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,3.51
+238,39,MAINTAIN,40000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.23,3.07
+239,40,MAINTAIN,50000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.29,4.27
+240,41,MAINTAIN,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,4.06
+241,42,MAINTAIN,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,3.51
+242,43,MAINTAIN,20000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.53,4.44
+243,44,LOSE_WEIGHT,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,4.0
+244,45,LOSE_WEIGHT,50000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.57,4.85
+245,46,LOSE_WEIGHT,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,4.64
+246,47,GAIN_WEIGHT,50000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.98,4.37
+247,48,MAINTAIN,30000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.48,4.82
+248,49,HIGH_PROTEIN,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,5.0
+249,50,GAIN_WEIGHT,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,4.29
+250,1,HIGH_PROTEIN,30000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.36,3.23
+251,2,MAINTAIN,40000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.78,4.31
+252,3,LOSE_WEIGHT,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,4.83
+253,4,GAIN_WEIGHT,70000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.15,3.39
+254,5,HIGH_PROTEIN,40000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.23,3.96
+255,6,GAIN_WEIGHT,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,3.51
+256,7,HIGH_PROTEIN,70000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.37,4.89
+257,8,HIGH_PROTEIN,30000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.73,5.0
+258,9,MAINTAIN,20000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.53,4.34
+259,10,GAIN_WEIGHT,40000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.78,4.84
+260,11,MAINTAIN,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.51
+261,12,MAINTAIN,70000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.15,4.13
+262,13,GAIN_WEIGHT,50000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.98,4.84
+263,14,MAINTAIN,50000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.29,3.89
+264,15,MAINTAIN,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,3.13
+265,16,GAIN_WEIGHT,70000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.31,4.89
+266,17,LOSE_WEIGHT,40000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.27,4.3
+267,18,MAINTAIN,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.14
+268,19,LOSE_WEIGHT,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.27
+269,20,HIGH_PROTEIN,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,3.55
+270,21,LOSE_WEIGHT,70000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.7,3.46
+271,22,LOSE_WEIGHT,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,4.28
+272,23,GAIN_WEIGHT,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,4.44
+273,24,GAIN_WEIGHT,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,4.22
+274,25,GAIN_WEIGHT,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,3.66
+275,26,HIGH_PROTEIN,40000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.78,5.0
+276,27,GAIN_WEIGHT,50000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.57,4.66
+277,28,HIGH_PROTEIN,70000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.15,3.38
+278,29,GAIN_WEIGHT,50000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.98,4.6
+279,30,GAIN_WEIGHT,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,3.6
+280,31,MAINTAIN,30000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.86,4.19
+281,32,GAIN_WEIGHT,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,4.91
+282,33,GAIN_WEIGHT,40000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.27,3.07
+283,34,LOSE_WEIGHT,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.84
+284,35,LOSE_WEIGHT,20000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,1.42,3.66
+285,36,LOSE_WEIGHT,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,4.52
+286,37,MAINTAIN,40000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.23,3.34
+287,38,GAIN_WEIGHT,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,3.13
+288,39,HIGH_PROTEIN,50000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.52,5.0
+289,40,MAINTAIN,70000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.31,4.73
+290,41,MAINTAIN,50000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.21,4.29
+291,42,LOSE_WEIGHT,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.56
+292,43,MAINTAIN,20000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,1.42,2.54
+293,44,GAIN_WEIGHT,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,3.88
+294,45,MAINTAIN,30000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.64,2.19
+295,46,LOSE_WEIGHT,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,4.23
+296,47,LOSE_WEIGHT,70000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.37,3.36
+297,48,LOSE_WEIGHT,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,5.0
+298,49,MAINTAIN,40000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.27,4.54
+299,50,MAINTAIN,50000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.62,3.89
+300,1,LOSE_WEIGHT,50000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.57,4.87
+301,2,MAINTAIN,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,4.01
+302,3,MAINTAIN,30000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.64,1.92
+303,4,GAIN_WEIGHT,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,3.57
+304,5,GAIN_WEIGHT,30000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.86,4.42
+305,6,LOSE_WEIGHT,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,4.23
+306,7,HIGH_PROTEIN,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,3.48
+307,8,HIGH_PROTEIN,70000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.44,4.9
+308,9,HIGH_PROTEIN,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,5.0
+309,10,LOSE_WEIGHT,40000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.26,4.35
+310,11,GAIN_WEIGHT,40000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.23,3.74
+311,12,MAINTAIN,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,4.93
+312,13,LOSE_WEIGHT,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,2.55
+313,14,LOSE_WEIGHT,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,4.36
+314,15,GAIN_WEIGHT,20000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.53,3.34
+315,16,MAINTAIN,50000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.62,4.51
+316,17,GAIN_WEIGHT,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.72
+317,18,MAINTAIN,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,4.34
+318,19,MAINTAIN,50000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.98,4.49
+319,20,MAINTAIN,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,4.42
+320,21,HIGH_PROTEIN,70000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.37,4.72
+321,22,HIGH_PROTEIN,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,4.78
+322,23,GAIN_WEIGHT,30000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.36,3.04
+323,24,HIGH_PROTEIN,30000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.04,4.43
+324,25,HIGH_PROTEIN,20000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,1.42,3.67
+325,26,LOSE_WEIGHT,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,4.1
+326,27,LOSE_WEIGHT,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,1.26
+327,28,MAINTAIN,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,4.08
+328,29,MAINTAIN,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,3.9
+329,30,HIGH_PROTEIN,40000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.55,4.99
+330,31,LOSE_WEIGHT,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,3.77
+331,32,LOSE_WEIGHT,40000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.78,5.0
+332,33,HIGH_PROTEIN,20000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,1.42,2.88
+333,34,GAIN_WEIGHT,40000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.26,3.41
+334,35,LOSE_WEIGHT,40000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.23,2.53
+335,36,HIGH_PROTEIN,30000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.48,3.51
+336,37,HIGH_PROTEIN,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,3.59
+337,38,MAINTAIN,50000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.44,4.61
+338,39,MAINTAIN,40000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.27,3.76
+339,40,MAINTAIN,70000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.44,3.87
+340,41,LOSE_WEIGHT,40000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.71,5.0
+341,42,MAINTAIN,20000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.52,4.73
+342,43,MAINTAIN,40000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.23,3.43
+343,44,HIGH_PROTEIN,50000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.29,2.88
+344,45,GAIN_WEIGHT,30000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.86,4.47
+345,46,MAINTAIN,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,3.79
+346,47,HIGH_PROTEIN,30000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.36,2.99
+347,48,GAIN_WEIGHT,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.6
+348,49,GAIN_WEIGHT,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.96
+349,50,MAINTAIN,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,4.18
+350,1,HIGH_PROTEIN,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,3.05
+351,2,GAIN_WEIGHT,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,3.55
+352,3,GAIN_WEIGHT,50000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.52,4.68
+353,4,HIGH_PROTEIN,20000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,1.1,4.5
+354,5,GAIN_WEIGHT,20000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.53,3.78
+355,6,GAIN_WEIGHT,40000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.78,5.0
+356,7,GAIN_WEIGHT,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,4.72
+357,8,LOSE_WEIGHT,20000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.52,4.34
+358,9,HIGH_PROTEIN,30000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.64,2.85
+359,10,GAIN_WEIGHT,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,3.37
+360,11,MAINTAIN,30000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.86,4.11
+361,12,HIGH_PROTEIN,70000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.31,5.0
+362,13,GAIN_WEIGHT,20000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.53,3.84
+363,14,LOSE_WEIGHT,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,3.28
+364,15,LOSE_WEIGHT,30000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.95,4.79
+365,16,GAIN_WEIGHT,70000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.15,3.28
+366,17,MAINTAIN,30000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.64,1.86
+367,18,HIGH_PROTEIN,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,3.05
+368,19,LOSE_WEIGHT,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,2.55
+369,20,GAIN_WEIGHT,70000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.31,4.8
+370,21,HIGH_PROTEIN,30000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.36,2.71
+371,22,HIGH_PROTEIN,40000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.78,5.0
+372,23,HIGH_PROTEIN,20000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,1.42,3.85
+373,24,MAINTAIN,40000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.26,4.27
+374,25,HIGH_PROTEIN,70000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.7,5.0
+375,26,HIGH_PROTEIN,20000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.72,3.37
+376,27,MAINTAIN,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,3.87
+377,28,HIGH_PROTEIN,40000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.55,5.0
+378,29,GAIN_WEIGHT,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,3.24
+379,30,LOSE_WEIGHT,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.57
+380,31,LOSE_WEIGHT,40000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.71,4.35
+381,32,HIGH_PROTEIN,30000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.35,3.1
+382,33,GAIN_WEIGHT,70000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,0.7,4.68
+383,34,HIGH_PROTEIN,50000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.29,3.22
+384,35,MAINTAIN,40000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.65,4.14
+385,36,LOSE_WEIGHT,70000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.31,4.97
+386,37,LOSE_WEIGHT,50000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.21,4.55
+387,38,GAIN_WEIGHT,40000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,0.78,4.9
+388,39,MAINTAIN,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,4.45
+389,40,GAIN_WEIGHT,20000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.52,3.57
+390,41,MAINTAIN,30000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,1.64,2.27
+391,42,LOSE_WEIGHT,70000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.21,4.22
+392,43,HIGH_PROTEIN,20000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,1.29,3.95
+393,44,MAINTAIN,30000,1002,"Cơm gạo lứt, cá rô phi áp chảo & súp lơ",DINNER,481.9,54.1,42.4,11.7,21950.0,0.73,4.5
+394,45,GAIN_WEIGHT,70000,1003,Khoai lang luộc & 2 trứng gà luộc,BREAKFAST,325.3,16.7,37.4,11.8,10674.0,0.15,3.53
+395,46,MAINTAIN,20000,1004,Bún tôm xào rau muống,LUNCH,406.5,35.1,48.6,8.9,31124.0,1.56,2.28
+396,47,MAINTAIN,70000,1005,Cơm thịt thăn lợn luộc & bắp cải luộc,DINNER,439.5,44.6,49.3,5.8,28365.0,0.41,4.26
+397,48,GAIN_WEIGHT,50000,1006,Yến mạch nấu trứng gà & chuối chín,BREAKFAST,216.8,9.5,30.6,7.0,10447.0,0.21,3.38
+398,49,GAIN_WEIGHT,20000,1007,Cơm thịt bò xào súp lơ xanh & cà rốt,LUNCH,620.2,38.5,53.7,26.9,49089.0,2.45,2.62
+399,50,GAIN_WEIGHT,40000,1008,Đậu phụ sốt cà chua & cơm gạo lứt,DINNER,339.1,16.6,40.5,13.7,14370.0,0.36,3.29
+400,1,MAINTAIN,70000,1001,Cơm ức gà áp chảo & rau luộc,LUNCH,588.2,69.2,44.4,13.1,25865.0,0.37,4.99
