@@ -16,44 +16,45 @@ NutriDSS là Hệ hỗ trợ ra quyết định (Decision Support System - DSS) 
 
 ---
 
-## 🚀 Hướng Dẫn Cài Đặt & Khởi Chạy
+## 🚀 Hướng Dẫn Clone & Khởi Chạy Nhanh
 
-### 1. Cài đặt môi trường
+> 📖 **Xem hướng dẫn chi tiết từng bước:** [HUONG_DAN_CLONE_VA_CAI_DAT.md](file:///d:/D%E1%BB%B1%20%C3%81n%20Dss/HUONG_DAN_CLONE_VA_CAI_DAT.md)
 
-Yêu cầu Python 3.10+:
-
+### 1. Clone mã nguồn về máy
 ```bash
-pip install -r requirements.txt
-# hoặc
-pip install fastapi uvicorn pydantic pandas scikit-learn joblib matplotlib seaborn pytest httpx
+git clone https://github.com/dieuiuquinbel/DieuDss.git
+cd DieuDss
 ```
 
-### 2. Khởi tạo CSDL & Dữ liệu
+### 2. Thiết lập môi trường ảo & Cài đặt thư viện (Python 3.10+)
+- **Windows (PowerShell):**
+  ```powershell
+  python -m venv venv
+  .\venv\Scripts\Activate.ps1
+  pip install -r requirements.txt
+  ```
+- **macOS / Linux:**
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r requirements.txt
+  ```
 
+### 3. Khởi tạo Cơ sở Dữ liệu NutriDSS V3 (Pipeline duy nhất)
 ```bash
-python data/generate_datasets.py
-python database/seed.py
+python -m database.build
 ```
 
-### 3. Huấn luyện Mô hình Machine Learning
-
+### 4. Chạy Kiểm Thử Tự Động (Toàn bộ 30 Tests)
 ```bash
-python models/train_ml_models.py
-```
-
-### 4. Chạy Kiểm Thử Tự Động (Unit & Integration Tests)
-
-```bash
-pytest -v
+python -m pytest tests/ -v
 ```
 
 ### 5. Khởi chạy Web Server
-
 ```bash
 uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
 ```
-
-Mở trình duyệt truy cập: `http://127.0.0.1:8000`
+Truy cập giao diện: 👉 **`http://127.0.0.1:8000/static/index.html`**
 
 ---
 
