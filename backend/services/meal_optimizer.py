@@ -157,7 +157,9 @@ class MealOptimizer:
             for l_set in lunch_sets:
                 for d_set in din_sets:
                     # Avoid duplicate main dishes in both lunch and dinner
-                    if l_set['id'] == d_set['id'] and len(mains) > 1:
+                    l_mains = set(l_set.get("main_recipe_ids", []))
+                    d_mains = set(d_set.get("main_recipe_ids", []))
+                    if l_mains and d_mains and l_mains.intersection(d_mains) and len(mains) > 1:
                         continue
                     tot_cal = bf['calories'] + l_set['calories'] + d_set['calories']
                     tot_prot = bf['protein_g'] + l_set['protein_g'] + d_set['protein_g']
@@ -339,23 +341,42 @@ class MealOptimizer:
         # Case 2: LUNCH or DINNER (Vietnamese Meal Sets)
         staples = [r for r in all_recipes if r.get('dish_role') == 'STAPLE'] or [r for r in all_recipes if 'cơm' in r['name_vi'].lower()][:3]
         if is_veg_mode:
-            mains = [r for r in all_recipes if r.get('dish_role') == 'VEG_PROTEIN' or (r.get('dish_role') == 'MAIN_PROTEIN' and r.get('is_vegetarian') == 1)]
+            mains = [r for r in all_recipes if (r.get('dish_role') in ['VEG_PROTEIN', 'MAIN_PROTEIN'] and r.get('is_vegetarian') == 1)]
             soups = [r for r in all_recipes if r.get('dish_role') == 'SOUP_VEG' and r.get('is_vegetarian') == 1]
         else:
-            mains = [r for r in all_recipes if r.get('dish_role') in ['MAIN_PROTEIN', 'VEG_PROTEIN']]
+            mains = [r for r in all_recipes if r.get('dish_role') in ['MAIN_PROTEIN', 'VEG_PROTEIN', 'SECOND_MAIN']]
             soups = [r for r in all_recipes if r.get('dish_role') == 'SOUP_VEG']
 
-        if not mains:
-            mains = [r for r in all_recipes if r.get('meal_type') in ['LUNCH', 'DINNER']][:15]
-        if not soups:
-            soups = [r for r in all_recipes if 'canh' in r['name_vi'].lower() or 'rau' in r['name_vi'].lower()][:10]
+        # Exclude non-main dishes
+        mains = [r for r in mains if r.get('dish_role') not in ['SEASONING', 'SAUCE', 'DESSERT', 'BEVERAGE']]
+
+        if not mains or not staples or not soups:
+            return {"error": "Không đủ món ăn thành phần (Cơm, Món mặn, Canh) phù hợp với các ràng buộc dị ứng và dinh dưỡng đã chọn."}
 
         candidate_sets = []
-        for st in staples[:2]:
-            for m in mains[:8]:
-                for sp in soups[:5]:
-                    composed = self.composer.compose_meal([st, m, sp], meal_type=meal_type, structure_mode=structure_mode)
-                    candidate_sets.append(composed)
+        if structure_mode == "FULL":
+            # 1 Cơm + 2 Món Mặn + 1 Canh
+            for st in staples[:2]:
+                for i, m1 in enumerate(mains[:6]):
+                    for m2 in mains[i+1:7]:
+                        for sp in soups[:3]:
+                            composed = self.composer.compose_meal([st, m1, m2, sp], meal_type=meal_type, structure_mode="FULL")
+                            candidate_sets.append(composed)
+        elif structure_mode == "VEGETARIAN":
+            # Chay thanh tịnh: Cơm + Đạm thực vật + Canh chay
+            veg_mains = [m for m in mains if m.get('is_vegetarian') == 1] or mains
+            for st in staples[:2]:
+                for m in veg_mains[:6]:
+                    for sp in soups[:4]:
+                        composed = self.composer.compose_meal([st, m, sp], meal_type=meal_type, structure_mode="VEGETARIAN")
+                        candidate_sets.append(composed)
+        else:
+            # STANDARD & LIGHT: 1 Cơm + 1 Mặn + 1 Canh
+            for st in staples[:2]:
+                for m in mains[:8]:
+                    for sp in soups[:5]:
+                        composed = self.composer.compose_meal([st, m, sp], meal_type=meal_type, structure_mode=structure_mode)
+                        candidate_sets.append(composed)
 
         if not candidate_sets:
             return {"error": "Không tìm thấy phương án mâm cơm phù hợp."}
@@ -463,19 +484,44 @@ class MealOptimizer:
         total_weekly_cost = 0.0
         total_weekly_cal = 0.0
 
-        meal_budget = daily_budget_vnd / 3.0
-        bf_pool = self.recommender.rank_recipes(goal, meal_budget, user_allergies, meal_type="BREAKFAST")
-        lunch_pool = self.recommender.rank_recipes(goal, meal_budget, user_allergies, meal_type="LUNCH")
-        din_pool = self.recommender.rank_recipes(goal, meal_budget, user_allergies, meal_type="DINNER")
+        # Allocate dynamic budget targets: Breakfast 20%, Lunch 45%, Dinner 35%
+        bf_target_budget = daily_budget_vnd * 0.20
+        lunch_target_budget = daily_budget_vnd * 0.45
+        din_target_budget = daily_budget_vnd * 0.35
 
-        if not bf_pool or not lunch_pool or not din_pool:
-            return {"error": "Không đủ món ăn để tạo thực đơn 7 ngày theo ràng buộc dị ứng."}
+        bf_pool = self.recommender.rank_recipes(goal, bf_target_budget, user_allergies, meal_type="BREAKFAST")
+        if not bf_pool:
+            bf_pool = [r for r in self.recommender.get_all_recipes_with_nutrition_and_cost() if r.get("meal_type") == "BREAKFAST"][:10]
+
+        # Generate candidates for lunch & dinner sets
+        all_recs = self.recommender.get_all_recipes_with_nutrition_and_cost()
+        staples = [r for r in all_recs if r.get("dish_role") == "STAPLE"] or [r for r in all_recs if "cơm" in r["name_vi"].lower()][:2]
+        mains = [r for r in all_recs if r.get("dish_role") in ["MAIN_PROTEIN", "VEG_PROTEIN", "SECOND_MAIN"] and r.get("dish_role") not in ["SEASONING", "SAUCE", "DESSERT"]]
+        soups = [r for r in all_recs if r.get("dish_role") == "SOUP_VEG"]
+
+        if not bf_pool or not mains or not soups or not staples:
+            return {"error": "Không đủ món ăn thành phần để tạo thực đơn 7 ngày theo ràng buộc dị ứng."}
+
+        # Build diverse lunch and dinner sets
+        candidate_lunch_sets = []
+        candidate_din_sets = []
+        for st in staples[:2]:
+            for m in mains:
+                for sp in soups[:4]:
+                    candidate_lunch_sets.append(self.composer.compose_meal([st, m, sp], meal_type="LUNCH", structure_mode="STANDARD"))
+                    candidate_din_sets.append(self.composer.compose_meal([st, m, sp], meal_type="DINNER", structure_mode="STANDARD"))
+
+        # Sort candidate sets by score and cost
+        sorted_lunch_sets = sorted(candidate_lunch_sets, key=lambda x: (-x.get("score", 4.0), x.get("estimated_cost_vnd", 0)))
+        sorted_din_sets = sorted(candidate_din_sets, key=lambda x: (-x.get("score", 4.0), x.get("estimated_cost_vnd", 0)))
 
         for day_idx, day_name in enumerate(days):
-            # Rotate meals to prevent repetition
             bf = bf_pool[day_idx % len(bf_pool)]
-            lunch = lunch_pool[(day_idx + 1) % len(lunch_pool)]
-            din = din_pool[(day_idx + 2) % len(din_pool)]
+            lunch = sorted_lunch_sets[(day_idx * 2) % len(sorted_lunch_sets)]
+            # Pick dinner with non-overlapping main protein
+            lunch_mains = set(lunch.get("main_recipe_ids", []))
+            din_candidates = [d for d in sorted_din_sets if not set(d.get("main_recipe_ids", [])).intersection(lunch_mains)]
+            din = din_candidates[(day_idx + 1) % len(din_candidates)] if din_candidates else sorted_din_sets[(day_idx + 1) % len(sorted_din_sets)]
 
             day_cost = bf["estimated_cost_vnd"] + lunch["estimated_cost_vnd"] + din["estimated_cost_vnd"]
             day_cal = bf["calories"] + lunch["calories"] + din["calories"]

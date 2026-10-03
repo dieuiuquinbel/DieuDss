@@ -15,42 +15,52 @@ class NutritionService:
             return {
                 "bmi": bmi,
                 "status": "Thiếu cân (Gầy)",
+                "category": "UNDERWEIGHT",
                 "color": "warning",
                 "badge_class": "bg-warning text-dark",
-                "icon": "bi-exclamation-circle-fill"
+                "icon": "bi-exclamation-circle-fill",
+                "standard": "Khuyến nghị IDI & WPRO cho người trưởng thành châu Á"
             }
         elif 18.5 <= bmi < 23.0:
             return {
                 "bmi": bmi,
                 "status": "Bình thường (Khỏe mạnh)",
+                "category": "NORMAL",
                 "color": "success",
                 "badge_class": "bg-success text-white",
-                "icon": "bi-check-circle-fill"
+                "icon": "bi-check-circle-fill",
+                "standard": "Khuyến nghị IDI & WPRO cho người trưởng thành châu Á"
             }
         elif 23.0 <= bmi < 25.0:
             return {
                 "bmi": bmi,
-                "status": "Thừa cân",
+                "status": "Tiền béo phì (Thừa cân)",
+                "category": "OVERWEIGHT",
                 "color": "warning",
                 "badge_class": "bg-warning text-dark",
-                "icon": "bi-exclamation-triangle-fill"
+                "icon": "bi-exclamation-triangle-fill",
+                "standard": "Khuyến nghị IDI & WPRO cho người trưởng thành châu Á"
             }
         else: # >= 25.0
             return {
                 "bmi": bmi,
-                "status": "Béo phì",
+                "status": "Béo phì (Chỉ số sàng lọc thể trạng)",
+                "category": "OBESE",
                 "color": "danger",
                 "badge_class": "bg-danger text-white",
-                "icon": "bi-x-circle-fill"
+                "icon": "bi-x-circle-fill",
+                "standard": "Khuyến nghị IDI & WPRO cho người trưởng thành châu Á"
             }
 
     @staticmethod
     def calculate_bmr(gender: str, weight_kg: float, height_cm: float, age: int) -> float:
         gender_upper = gender.upper()
+        # Mifflin-St Jeor formula (validated for adults >= 18)
         if gender_upper in ["MALE", "NAM"]:
-            return 10 * weight_kg + 6.25 * height_cm - 5 * age + 5
+            base_bmr = 10 * weight_kg + 6.25 * height_cm - 5 * age + 5
         else:
-            return 10 * weight_kg + 6.25 * height_cm - 5 * age - 161
+            base_bmr = 10 * weight_kg + 6.25 * height_cm - 5 * age - 161
+        return base_bmr
 
     @staticmethod
     def calculate_tdee(bmr: float, activity_level: str) -> float:
@@ -72,7 +82,7 @@ class NutritionService:
             return tdee + 400.0
         elif goal_upper in ["HIGH_PROTEIN", "TĂNG CƠ"]:
             return tdee + 250.0
-        elif goal_upper in ["GROWTH", "TĂNG CHIỀU CAO"]:
+        elif goal_upper in ["GROWTH", "TĂNG CHIỀU CAO", "HỖ TRỢ PHÁT TRIỂN", "HỖ TRỢ DINH DƯỠNG TĂNG TRƯỞNG & PHÁT TRIỂN"]:
             return tdee + 300.0
         else:
             return tdee

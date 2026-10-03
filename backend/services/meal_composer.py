@@ -48,14 +48,38 @@ class MealComposer:
         }
         structure_label = label_map.get(structure_mode, "Mâm cơm chuẩn Việt")
 
-        # Find main image from main protein or first item
-        main_dish = next((i for i in items if i.get("dish_role") in ["MAIN_PROTEIN", "VEG_PROTEIN"]), items[0])
-        dish_image = main_dish.get("image_url", "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=80")
+        # Classify items by semantic dish role
+        role_map: Dict[str, List[Dict[str, Any]]] = {}
+        for it in items:
+            role = it.get("dish_role", "MAIN_PROTEIN")
+            role_map.setdefault(role, []).append(it)
+
+        staple_item = role_map.get("STAPLE", [None])[0] or (items[0] if items else None)
+        all_mains = role_map.get("MAIN_PROTEIN", []) + role_map.get("VEG_PROTEIN", []) + role_map.get("SECOND_MAIN", [])
+        main_item1 = all_mains[0] if len(all_mains) > 0 else (items[1] if len(items) > 1 else items[0])
+        main_item2 = all_mains[1] if len(all_mains) > 1 else None
+        soup_item = role_map.get("SOUP_VEG", [None])[0] or (items[-1] if len(items) > 2 else None)
+
+        main_recipe_ids = [it["id"] for it in all_mains] if all_mains else [main_item1.get("id")]
+        recipe_ids = [it.get("id", 0) for it in items]
+        sorted_ids = sorted(recipe_ids)
+        combo_id = f"meal_{meal_type.lower()}_" + "_".join(str(i) for i in sorted_ids)
+
+        # Main image from primary protein dish
+        dish_image = main_item1.get("image_url") or items[0].get("image_url", "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=80")
+
+        all_cost_verified = all(it.get("cost_status") != "INSUFFICIENT_DATA" for it in items)
+        meal_cost_status = "VERIFIED" if all_cost_verified else "INSUFFICIENT_DATA"
 
         return {
-            "id": items[0].get("id", 0),
+            "id": combo_id,
+            "combo_id": combo_id,
+            "recipe_ids": recipe_ids,
+            "main_recipe_ids": main_recipe_ids,
             "name_vi": name,
             "meal_type": meal_type,
+            "structure_mode": structure_mode,
+            "cost_status": meal_cost_status,
             "calories": round(tot_cal, 1),
             "protein_g": round(tot_prot, 1),
             "carb_g": round(tot_carb, 1),
@@ -71,8 +95,9 @@ class MealComposer:
                 "structure_mode": structure_mode,
                 "dish_count": len(items),
                 "items": items,
-                "staple": items[0] if len(items) > 0 else None,
-                "main_dish": items[1] if len(items) > 1 else None,
-                "soup_veg": items[-1] if len(items) > 2 else None
+                "staple": staple_item,
+                "main_dish": main_item1,
+                "second_main": main_item2,
+                "soup_veg": soup_item
             }
         }

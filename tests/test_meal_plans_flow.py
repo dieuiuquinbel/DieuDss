@@ -28,7 +28,12 @@ def test_single_meal_generator(client):
         assert opt["meal"]["estimated_cost_vnd"] > 0
         assert opt["meal"]["calories"] > 0
 
+from backend.core.security import create_access_token
+
 def test_saved_meal_plan_crud_flow(client):
+    token = create_access_token({"sub": "2", "username": "demouser", "role": "USER"})
+    headers = {"Authorization": f"Bearer {token}"}
+
     # 1. Save plan
     save_payload = {
         "plan_name": "Thực đơn test tự động",
@@ -43,19 +48,19 @@ def test_saved_meal_plan_crud_flow(client):
             {"recipe_id": 1002, "day_of_week": "Hôm nay", "meal_type": "LUNCH", "cost_vnd": 45000, "calories": 800}
         ]
     }
-    res_save = client.post("/api/meal-plans/save", json=save_payload)
+    res_save = client.post("/api/meal-plans/save", json=save_payload, headers=headers)
     assert res_save.status_code == 200
     plan_id = res_save.json()["plan_id"]
     assert plan_id > 0
 
     # 2. List plans
-    res_list = client.get("/api/meal-plans")
+    res_list = client.get("/api/meal-plans", headers=headers)
     assert res_list.status_code == 200
     plans = res_list.json()
     assert any(p["id"] == plan_id for p in plans)
 
     # 3. Get plan detail
-    res_detail = client.get(f"/api/meal-plans/{plan_id}")
+    res_detail = client.get(f"/api/meal-plans/{plan_id}", headers=headers)
     assert res_detail.status_code == 200
     detail = res_detail.json()
     assert detail["plan_name"] == "Thực đơn test tự động"
@@ -63,10 +68,10 @@ def test_saved_meal_plan_crud_flow(client):
     assert "recipe_detail" in detail["items"][0]
 
     # 4. Apply plan
-    res_apply = client.post(f"/api/meal-plans/{plan_id}/apply")
+    res_apply = client.post(f"/api/meal-plans/{plan_id}/apply", headers=headers)
     assert res_apply.status_code == 200
     assert "áp dụng" in res_apply.json()["message"].lower()
 
     # 5. Delete plan
-    res_del = client.delete(f"/api/meal-plans/{plan_id}")
+    res_del = client.delete(f"/api/meal-plans/{plan_id}", headers=headers)
     assert res_del.status_code == 200

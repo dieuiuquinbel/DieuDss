@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS stores (
     source_url TEXT
 );
 
--- 9. Food Price Observations
+-- -- 9. Food Price Observations
 CREATE TABLE IF NOT EXISTS food_prices (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     food_id INTEGER NOT NULL,
@@ -112,6 +112,10 @@ CREATE TABLE IF NOT EXISTS food_prices (
     region TEXT,
     promotion_flag INTEGER DEFAULT 0,
     source_url TEXT,
+    product_url TEXT,
+    observed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    valid_from TIMESTAMP,
+    valid_to TIMESTAMP,
     collected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (food_id) REFERENCES foods(id)
 );
@@ -150,6 +154,8 @@ CREATE TABLE IF NOT EXISTS recipes (
     id INTEGER PRIMARY KEY,
     name_vi TEXT NOT NULL,
     meal_type TEXT NOT NULL, -- BREAKFAST, LUNCH, DINNER, SNACK
+    dish_role TEXT NOT NULL DEFAULT 'MAIN_PROTEIN', -- STAPLE, MAIN_PROTEIN, SECOND_MAIN, VEG_PROTEIN, SOUP_VEG, SIDE, DESSERT, BEVERAGE
+    is_vegetarian INTEGER DEFAULT 0,
     servings INTEGER DEFAULT 1,
     prep_time_min INTEGER DEFAULT 10,
     cook_time_min INTEGER DEFAULT 15,
@@ -165,7 +171,12 @@ CREATE TABLE IF NOT EXISTS recipe_ingredients (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     recipe_id INTEGER NOT NULL,
     food_id INTEGER NOT NULL,
+    raw_quantity REAL,
+    raw_unit TEXT,
     quantity_g REAL NOT NULL,
+    edible_fraction REAL DEFAULT 1.0,
+    ingredient_role TEXT DEFAULT 'MAIN', -- MAIN, SECONDARY, SEASONING, AROMATIC
+    optional INTEGER DEFAULT 0,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id),
     FOREIGN KEY (food_id) REFERENCES foods(id)
 );
@@ -262,7 +273,8 @@ CREATE TABLE IF NOT EXISTS user_allergies (
 -- 22. Meal Plans Persistence
 CREATE TABLE IF NOT EXISTS meal_plans (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
+    user_id INTEGER NOT NULL,
+    plan_name TEXT NOT NULL DEFAULT 'Thực đơn của tôi',
     plan_type TEXT DEFAULT 'DAILY', -- DAILY, WEEKLY
     start_date TEXT,
     end_date TEXT,
@@ -275,7 +287,39 @@ CREATE TABLE IF NOT EXISTS meal_plans (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- 23. Meal Plan Items
+-- 23. Meals (Mâm cơm theo bữa)
+CREATE TABLE IF NOT EXISTS meals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    meal_plan_id INTEGER NOT NULL,
+    day_of_week TEXT DEFAULT 'TODAY', -- MONDAY, TUESDAY... hoặc YYYY-MM-DD
+    meal_type TEXT NOT NULL, -- BREAKFAST, LUNCH, DINNER, SNACK
+    structure_type TEXT DEFAULT 'STANDARD', -- STANDARD, FULL, LIGHT, VEGETARIAN, CUSTOM
+    target_budget_vnd REAL,
+    actual_cost_vnd REAL,
+    target_calories REAL,
+    actual_calories REAL,
+    cost_status TEXT DEFAULT 'EXACT', -- EXACT, ESTIMATED, INSUFFICIENT_DATA
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (meal_plan_id) REFERENCES meal_plans(id) ON DELETE CASCADE
+);
+
+-- 24. Meal Items (Các món cấu thành mâm cơm)
+CREATE TABLE IF NOT EXISTS meal_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    meal_id INTEGER NOT NULL,
+    recipe_id INTEGER NOT NULL,
+    dish_role TEXT NOT NULL, -- STAPLE, MAIN_PROTEIN, SECOND_MAIN, SOUP_VEG, SIDE, DESSERT
+    portion_multiplier REAL DEFAULT 1.0,
+    servings REAL DEFAULT 1.0,
+    selected_by TEXT DEFAULT 'SYSTEM', -- SYSTEM, USER
+    cost_vnd REAL,
+    calories REAL,
+    cost_status TEXT DEFAULT 'EXACT',
+    FOREIGN KEY (meal_id) REFERENCES meals(id) ON DELETE CASCADE,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(id)
+);
+
+-- 25. Meal Plan Items (Legacy compatible view/table)
 CREATE TABLE IF NOT EXISTS meal_plan_items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     meal_plan_id INTEGER NOT NULL,
@@ -286,7 +330,7 @@ CREATE TABLE IF NOT EXISTS meal_plan_items (
     selected_by TEXT DEFAULT 'SYSTEM', -- SYSTEM, USER
     cost_vnd REAL,
     calories REAL,
-    FOREIGN KEY (meal_plan_id) REFERENCES meal_plans(id),
+    FOREIGN KEY (meal_plan_id) REFERENCES meal_plans(id) ON DELETE CASCADE,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id)
 );
 

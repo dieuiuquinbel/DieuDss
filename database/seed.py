@@ -197,19 +197,29 @@ def seed_database():
         VALUES (?, ?, ?, ?, ?, ?)
     """, API_SOURCES)
 
-    # 9. Seed Default Administrative & Demo Accounts
-    admin_hash = hash_password("NutriDSS@2026")
-    demo_hash = hash_password("DemoUser@123")
+    # 9. Seed Default Administrative & Demo Accounts (Configurable via Environment Variables)
+    admin_pw = os.getenv("NUTRIDSS_ADMIN_PASSWORD")
+    demo_pw = os.getenv("NUTRIDSS_DEMO_PASSWORD")
+    
+    if not admin_pw:
+        admin_pw = "NutriDSS@2026"
+        print("[SECURITY NOTICE] NUTRIDSS_ADMIN_PASSWORD not set. Using dev default for local development only.")
+    if not demo_pw:
+        demo_pw = "DemoUser@123"
+        print("[SECURITY NOTICE] NUTRIDSS_DEMO_PASSWORD not set. Using dev default for local development only.")
+
+    admin_hash = hash_password(admin_pw)
+    demo_hash = hash_password(demo_pw)
     cursor.execute("""
-        INSERT INTO users (id, email, username, password_hash, role)
+        INSERT OR REPLACE INTO users (id, email, username, password_hash, role)
         VALUES (1, 'admin@nutridss.vn', 'admin', ?, 'ADMIN')
     """, (admin_hash,))
     cursor.execute("""
-        INSERT INTO users (id, email, username, password_hash, role)
+        INSERT OR REPLACE INTO users (id, email, username, password_hash, role)
         VALUES (2, 'demo@nutridss.vn', 'demouser', ?, 'USER')
     """, (demo_hash,))
     cursor.execute("""
-        INSERT INTO user_profiles (user_id, display_name, age, gender, height_cm, weight_kg, activity_level, health_goal, daily_budget_vnd)
+        INSERT OR REPLACE INTO user_profiles (user_id, display_name, age, gender, height_cm, weight_kg, activity_level, health_goal, daily_budget_vnd)
         VALUES (2, 'Demo User', 26, 'MALE', 172.0, 68.0, 'MODERATE', 'LOSE_WEIGHT', 80000.0)
     """)
 

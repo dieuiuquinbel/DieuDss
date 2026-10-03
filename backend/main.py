@@ -286,8 +286,30 @@ def generate_single_meal(req: SingleMealGenerateRequest, request: Request):
     return res
 
 @app.post("/api/meal-plans/save", summary="Lưu thực đơn vào danh sách của tôi")
-def save_meal_plan(req: SaveMealPlanRequest, user: Optional[Dict[str, Any]] = Depends(get_current_user_optional)):
-    user_id = int(user["sub"]) if user and "sub" in user else 1
+def save_meal_plan(req: SaveMealPlanRequest, user: Dict[str, Any] = Depends(get_current_user_required)):
+    user_id = int(user["sub"])
+    
+    # SERVER-SIDE DETERMINISTIC RECALCULATION (Zero trust on client totals)
+    all_recs = recommender.get_all_recipes_with_nutrition_and_cost()
+    rec_dict = {r["id"]: r for r in all_recs}
+
+    calc_total_cost = 0.0
+    calc_total_cal = 0.0
+    verified_items = []
+
+    for it in req.items:
+        rec = rec_dict.get(it.recipe_id)
+        mult = float(it.portion_multiplier or 1.0)
+        if rec:
+            item_cost = round((rec.get("estimated_cost_vnd", 0.0) or 0.0) * mult, 0)
+            item_cal = round((rec.get("calories", 0.0) or 0.0) * mult, 1)
+        else:
+            item_cost = float(it.cost_vnd or 0.0)
+            item_cal = float(it.calories or 0.0)
+        calc_total_cost += item_cost
+        calc_total_cal += item_cal
+        verified_items.append((it, item_cost, item_cal, mult))
+
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -295,17 +317,17 @@ def save_meal_plan(req: SaveMealPlanRequest, user: Optional[Dict[str, Any]] = De
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         user_id,
-        req.plan_name,
-        req.plan_type,
+        req.plan_name or "Thực đơn của tôi",
+        req.plan_type or "DAILY",
         req.budget_vnd,
         req.health_goal,
         req.target_calories,
-        req.total_cost_vnd,
-        req.total_calories
+        round(calc_total_cost, 0),
+        round(calc_total_cal, 1)
     ))
     plan_id = cursor.lastrowid
 
-    for it in req.items:
+    for it, item_cost, item_cal, mult in verified_items:
         cursor.execute("""
             INSERT INTO meal_plan_items (meal_plan_id, recipe_id, day_of_week, meal_type, portion_multiplier, selected_by, cost_vnd, calories)
             VALUES (?, ?, ?, ?, ?, 'USER', ?, ?)
@@ -314,39 +336,48 @@ def save_meal_plan(req: SaveMealPlanRequest, user: Optional[Dict[str, Any]] = De
             it.recipe_id,
             it.day_of_week or "Hôm nay",
             it.meal_type,
-            it.portion_multiplier or 1.0,
-            it.cost_vnd or 0.0,
-            it.calories or 0.0
+            mult,
+            item_cost,
+            item_cal
         ))
 
     conn.commit()
     conn.close()
-    return {"status": "success", "message": "Đã lưu thực đơn thành công!", "plan_id": plan_id}
+    return {
+        "status": "success", 
+        "message": "Đã lưu thực đơn thành công với dữ liệu được kiểm chứng!", 
+        "plan_id": plan_id,
+        "verified_cost_vnd": round(calc_total_cost, 0),
+        "verified_calories": round(calc_total_cal, 1)
+    }
 
-@app.get("/api/meal-plans", summary="Lấy danh sách các thực đơn đã lưu")
-def get_saved_meal_plans(user: Optional[Dict[str, Any]] = Depends(get_current_user_optional)):
+@app.get("/api/meal-plans", summary="Lấy danh sách các thực đơn đã lưu của tôi")
+def get_saved_meal_plans(user: Dict[str, Any] = Depends(get_current_user_required)):
+    user_id = int(user["sub"])
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
         SELECT mp.*, COUNT(mpi.id) as item_count
         FROM meal_plans mp
         LEFT JOIN meal_plan_items mpi ON mp.id = mpi.meal_plan_id
+        WHERE mp.user_id = ?
         GROUP BY mp.id
         ORDER BY mp.created_at DESC
-    """)
+    """, (user_id,))
     rows = cursor.fetchall()
     conn.close()
     return [dict(r) for r in rows]
 
 @app.get("/api/meal-plans/{plan_id}", summary="Lấy chi tiết thực đơn đã lưu kèm danh sách món, nguyên liệu & cách nấu")
-def get_saved_meal_plan_detail(plan_id: int):
+def get_saved_meal_plan_detail(plan_id: int, user: Dict[str, Any] = Depends(get_current_user_required)):
+    user_id = int(user["sub"])
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM meal_plans WHERE id = ?", (plan_id,))
+    cursor.execute("SELECT * FROM meal_plans WHERE id = ? AND user_id = ?", (plan_id, user_id))
     plan_row = cursor.fetchone()
     if not plan_row:
         conn.close()
-        raise HTTPException(status_code=404, detail="Không tìm thấy thực đơn.")
+        raise HTTPException(status_code=404, detail="Không tìm thấy thực đơn hoặc bạn không có quyền truy cập.")
 
     plan_data = dict(plan_row)
 
@@ -372,24 +403,30 @@ def get_saved_meal_plan_detail(plan_id: int):
     return plan_data
 
 @app.delete("/api/meal-plans/{plan_id}", summary="Xóa thực đơn đã lưu")
-def delete_saved_meal_plan(plan_id: int):
+def delete_saved_meal_plan(plan_id: int, user: Dict[str, Any] = Depends(get_current_user_required)):
+    user_id = int(user["sub"])
     conn = get_db_connection()
     cursor = conn.cursor()
+    cursor.execute("SELECT id FROM meal_plans WHERE id = ? AND user_id = ?", (plan_id, user_id))
+    if not cursor.fetchone():
+        conn.close()
+        raise HTTPException(status_code=404, detail="Không tìm thấy thực đơn hoặc bạn không có quyền thao tác.")
     cursor.execute("DELETE FROM meal_plan_items WHERE meal_plan_id = ?", (plan_id,))
-    cursor.execute("DELETE FROM meal_plans WHERE id = ?", (plan_id,))
+    cursor.execute("DELETE FROM meal_plans WHERE id = ? AND user_id = ?", (plan_id, user_id))
     conn.commit()
     conn.close()
     return {"status": "success", "message": "Đã xóa thực đơn thành công."}
 
 @app.post("/api/meal-plans/{plan_id}/apply", summary="Áp dụng thực đơn cho ngày hôm nay")
-def apply_saved_meal_plan(plan_id: int):
+def apply_saved_meal_plan(plan_id: int, user: Dict[str, Any] = Depends(get_current_user_required)):
+    user_id = int(user["sub"])
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM meal_plans WHERE id = ?", (plan_id,))
+    cursor.execute("SELECT * FROM meal_plans WHERE id = ? AND user_id = ?", (plan_id, user_id))
     plan_row = cursor.fetchone()
     conn.close()
     if not plan_row:
-        raise HTTPException(status_code=404, detail="Không tìm thấy thực đơn.")
+        raise HTTPException(status_code=404, detail="Không tìm thấy thực đơn hoặc bạn không có quyền áp dụng.")
     return {"status": "success", "message": f"Đã áp dụng thực đơn '{plan_row['plan_name'] or plan_id}' cho hôm nay!"}
 
 # ---------------------------------------------------------

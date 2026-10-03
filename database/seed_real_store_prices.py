@@ -144,6 +144,14 @@ MULTI_STORE_PRICES = [
     # Cà chua (406)
     (406, "WinMart", "Cà chua WinEco túi 500g", 14000, 500, "Toàn quốc"),                  # 28k/kg
     (406, "GO! Vietnam", "Cà chua tươi loại 1 khay 1kg", 24000, 1000, "Toàn quốc"),        # 24k/kg
+
+    # Sả cây tươi (1519)
+    (1519, "WinMart", "Sả cây WinEco túi 200g", 7000, 200, "Toàn quốc"),                  # 35k/kg
+    (1519, "GO! Vietnam", "Sả cây tươi bó 200g", 6000, 200, "Toàn quốc"),                 # 30k/kg
+
+    # Hành tây (1520)
+    (1520, "WinMart", "Hành tây trắng túi 500g", 12000, 500, "Toàn quốc"),                 # 24k/kg
+    (1520, "GO! Vietnam", "Hành tây Đà Lạt túi 1kg", 22000, 1000, "Toàn quốc"),           # 22k/kg
 ]
 
 def seed_prices():

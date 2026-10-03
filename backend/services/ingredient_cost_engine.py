@@ -127,39 +127,56 @@ class IngredientCostEngine:
             p_min = float(summary_row[0] or summary_row[1])
             p_med = float(summary_row[1])
             p_max = float(summary_row[2] or summary_row[1])
+            price_status = "VERIFIED"
+            price_confidence = "HIGH" if len(store_observations) >= 2 else "MEDIUM"
         elif store_observations:
             prices = [obs["price_per_100g"] for obs in store_observations]
             p_min = min(prices)
             p_max = max(prices)
             n = len(prices)
             p_med = prices[n // 2] if n % 2 == 1 else (prices[n // 2 - 1] + prices[n // 2]) / 2.0
+            price_status = "VERIFIED"
+            price_confidence = "HIGH" if n >= 3 else "MEDIUM"
         else:
-            # Fallback default reasonable grocery price (15k/100g)
-            p_min = 1500.0
-            p_med = 1500.0
-            p_max = 1500.0
+            # NO FAKE FALLBACK: Missing price is marked explicitly as UNKNOWN
+            p_min = None
+            p_med = None
+            p_max = None
+            price_status = "UNKNOWN"
+            price_confidence = "NONE"
 
         return {
-            "price_per_100g_median": round(p_med, 1),
-            "price_per_100g_min": round(p_min, 1),
-            "price_per_100g_max": round(p_max, 1),
-            "price_per_kg_median": round(p_med * 10.0, 0),
-            "price_per_kg_min": round(p_min * 10.0, 0),
-            "price_per_kg_max": round(p_max * 10.0, 0),
+            "price_status": price_status,
+            "price_confidence": price_confidence,
+            "price_per_100g_median": round(p_med, 1) if p_med is not None else None,
+            "price_per_100g_min": round(p_min, 1) if p_min is not None else None,
+            "price_per_100g_max": round(p_max, 1) if p_max is not None else None,
+            "price_per_kg_median": round(p_med * 10.0, 0) if p_med is not None else None,
+            "price_per_kg_min": round(p_min * 10.0, 0) if p_min is not None else None,
+            "price_per_kg_max": round(p_max * 10.0, 0) if p_max is not None else None,
             "store_observations": store_observations
         }
 
     def calculate_ingredient_cost(self, food_id: int, quantity: float, unit: str = "g") -> Dict[str, Any]:
         """
-        Computes the cost for a single ingredient item:
+        Computes the deterministic cost for a single ingredient item:
         normalized_g = convert_to_grams(quantity, unit)
         cost = (normalized_g / 100) * price_per_100g_median
+        If no verified price exists, returns cost_status = 'INSUFFICIENT_DATA' and null cost.
         """
         norm_g = self.convert_to_grams(quantity, unit, food_id)
         price_info = self.get_ingredient_price_info(food_id)
-        cost_med = (norm_g / 100.0) * price_info["price_per_100g_median"]
-        cost_min = (norm_g / 100.0) * price_info["price_per_100g_min"]
-        cost_max = (norm_g / 100.0) * price_info["price_per_100g_max"]
+        
+        if price_info["price_status"] == "UNKNOWN" or price_info["price_per_100g_median"] is None:
+            cost_med = None
+            cost_min = None
+            cost_max = None
+            cost_status = "INSUFFICIENT_DATA"
+        else:
+            cost_med = round((norm_g / 100.0) * price_info["price_per_100g_median"], 0)
+            cost_min = round((norm_g / 100.0) * price_info["price_per_100g_min"], 0)
+            cost_max = round((norm_g / 100.0) * price_info["price_per_100g_max"], 0)
+            cost_status = "VERIFIED"
 
         return {
             "food_id": food_id,
@@ -167,9 +184,10 @@ class IngredientCostEngine:
             "raw_unit": unit,
             "display_quantity": f"{quantity:g}{unit}" if isinstance(quantity, (int, float)) else f"{quantity} {unit}",
             "normalized_quantity_g": round(norm_g, 1),
-            "cost_vnd": round(cost_med, 0),
-            "cost_min_vnd": round(cost_min, 0),
-            "cost_max_vnd": round(cost_max, 0),
+            "cost_status": cost_status,
+            "cost_vnd": cost_med,
+            "cost_min_vnd": cost_min,
+            "cost_max_vnd": cost_max,
             "price_info": price_info
         }
 
@@ -180,7 +198,7 @@ class IngredientCostEngine:
         - raw quantity and unit (e.g. 300g, 10ml, 5g)
         - reference median price and supermarket range
         - subtotal cost (VND)
-        - total recipe cost
+        - total recipe cost and cost_status
         """
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -210,6 +228,7 @@ class IngredientCostEngine:
         tot_cost_med = 0.0
         tot_cost_min = 0.0
         tot_cost_max = 0.0
+        has_insufficient_data = False
 
         for row in ing_rows:
             fid, name_vi, qty_g, raw_q, raw_u, def_u = row
@@ -219,11 +238,17 @@ class IngredientCostEngine:
             calc = self.calculate_ingredient_cost(fid, quantity, unit)
             calc["name_vi"] = name_vi
 
-            tot_cost_med += calc["cost_vnd"]
-            tot_cost_min += calc["cost_min_vnd"]
-            tot_cost_max += calc["cost_max_vnd"]
+            if calc["cost_status"] == "INSUFFICIENT_DATA" or calc["cost_vnd"] is None:
+                has_insufficient_data = True
+            else:
+                tot_cost_med += calc["cost_vnd"]
+                tot_cost_min += calc["cost_min_vnd"]
+                tot_cost_max += calc["cost_max_vnd"]
 
             ingredients_breakdown.append(calc)
+
+        recipe_cost_status = "INSUFFICIENT_DATA" if has_insufficient_data else "VERIFIED"
+        recipe_confidence = "LOW" if has_insufficient_data else ("HIGH" if len(ingredients_breakdown) > 0 else "NONE")
 
         return {
             "recipe_id": rec_meta[0],
@@ -232,10 +257,13 @@ class IngredientCostEngine:
             "dish_role": rec_meta[3],
             "meal_type": rec_meta[4],
             "image_url": rec_meta[5],
-            "total_cost_vnd": round(tot_cost_med, 0),
+            "cost_status": recipe_cost_status,
+            "price_confidence": recipe_confidence,
+            "total_cost_vnd": round(tot_cost_med, 0) if not has_insufficient_data else round(tot_cost_med, 0),
+            "estimated_cost_vnd": round(tot_cost_med, 0),
             "cost_range": {
-                "min_vnd": round(tot_cost_min, 0),
-                "max_vnd": round(tot_cost_max, 0)
+                "min_vnd": round(tot_cost_min, 0) if not has_insufficient_data else None,
+                "max_vnd": round(tot_cost_max, 0) if not has_insufficient_data else None
             },
             "ingredient_count": len(ingredients_breakdown),
             "ingredients": ingredients_breakdown,
@@ -247,8 +275,10 @@ class IngredientCostEngine:
         Aggregates costs for a meal combination of multiple recipes (e.g. Rice + Main + Soup).
         """
         breakdowns = [self.calculate_recipe_cost_breakdown(rid) for rid in recipe_ids]
-        tot_cost = sum(b.get("total_cost_vnd", 0) for b in breakdowns if "error" not in b)
+        tot_cost = sum(b.get("total_cost_vnd", 0) for b in breakdowns if "error" not in b and b.get("total_cost_vnd") is not None)
+        all_verified = all(b.get("cost_status") == "VERIFIED" for b in breakdowns if "error" not in b)
         return {
+            "cost_status": "VERIFIED" if all_verified else "INSUFFICIENT_DATA",
             "total_meal_cost_vnd": round(tot_cost, 0),
             "dishes": breakdowns
         }

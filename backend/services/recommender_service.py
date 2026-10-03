@@ -15,14 +15,16 @@ import os
 from typing import List, Dict, Any, Optional
 
 from backend.services.rule_engine import RuleEngine
+from backend.services.ingredient_cost_engine import IngredientCostEngine
 
 MODEL_PATH = "models/best_recipe_ranker.joblib"
 DB_PATH = "database/nutridss.db"
 
 class RecommenderService:
-    def __init__(self):
+    def __init__(self, cost_engine: Optional[IngredientCostEngine] = None):
         self._load_model()
         self._cached_recipes = None
+        self.cost_engine = cost_engine or IngredientCostEngine()
 
     def _load_model(self):
         if os.path.exists(MODEL_PATH):
@@ -34,25 +36,22 @@ class RecommenderService:
             self.model = None
 
     def get_all_recipes_with_nutrition_and_cost(self, force_refresh: bool = False) -> List[Dict[str, Any]]:
-        """Lấy tất cả công thức cùng dinh dưỡng và chi phí ước tính (có in-memory cache)."""
+        """Lấy tất cả công thức cùng dinh dưỡng và chi phí ước tính dựa trên IngredientCostEngine duy nhất."""
         if self._cached_recipes is not None and not force_refresh:
-            # Return deep copy or fresh dicts
             return [dict(r) for r in self._cached_recipes]
 
         conn = sqlite3.connect(DB_PATH)
         df_recipes = pd.read_sql_query("SELECT * FROM recipes", conn)
         df_ings = pd.read_sql_query("SELECT * FROM recipe_ingredients", conn)
         df_foods = pd.read_sql_query("SELECT * FROM foods", conn)
-        df_prices = pd.read_sql_query("SELECT * FROM food_price_summary", conn)
         conn.close()
 
         food_map = {row['id']: row for _, row in df_foods.iterrows()}
-        price_map = {row['food_id']: row.get('estimated_price_per_100g', 5000.0) for _, row in df_prices.iterrows()}
 
         recipe_list = []
 
         for _, rec in df_recipes.iterrows():
-            rec_id = rec['id']
+            rec_id = int(rec['id'])
             ings = df_ings[df_ings['recipe_id'] == rec_id]
             
             total_cal = 0.0
@@ -62,7 +61,6 @@ class RecommenderService:
             total_fiber = 0.0
             total_sugar = 0.0
             total_sodium = 0.0
-            total_cost = 0.0
             main_ingredients = []
 
             for _, ing in ings.iterrows():
@@ -72,7 +70,6 @@ class RecommenderService:
                 f_info = food_map.get(f_id)
                 if f_info is None:
                     continue
-                price_100g = price_map.get(f_id, 5000.0)
                 
                 total_cal += (float(f_info['calories_kcal_100g']) / 100.0) * qty
                 total_prot += (float(f_info['protein_g_100g']) / 100.0) * qty
@@ -81,14 +78,19 @@ class RecommenderService:
                 total_fiber += (float(f_info['fiber_g_100g']) / 100.0) * qty
                 total_sugar += (float(f_info['sugar_g_100g']) / 100.0) * qty
                 total_sodium += (float(f_info['sodium_mg_100g']) / 100.0) * qty
-                total_cost += (price_100g / 100.0) * qty
                 main_ingredients.append(f_info['canonical_name_vi'])
 
+            # Single Source of Truth for Pricing: IngredientCostEngine
+            cost_info = self.cost_engine.calculate_recipe_cost_breakdown(rec_id)
+            total_cost = cost_info.get("estimated_cost_vnd", 0.0)
+            cost_status = cost_info.get("cost_status", "VERIFIED")
+            price_confidence = cost_info.get("price_confidence", "MEDIUM")
+
             recipe_list.append({
-                "id": int(rec['id']),
+                "id": rec_id,
                 "name_vi": str(rec['name_vi']) if pd.notna(rec.get('name_vi')) else "",
                 "meal_type": str(rec['meal_type']) if pd.notna(rec.get('meal_type')) else "LUNCH",
-                "dish_role": str(rec.get('dish_role')) if pd.notna(rec.get('dish_role')) else "MAIN_DISH",
+                "dish_role": str(rec.get('dish_role')) if pd.notna(rec.get('dish_role')) else "MAIN_PROTEIN",
                 "is_vegetarian": int(rec.get('is_vegetarian', 0) or 0) if pd.notna(rec.get('is_vegetarian')) else 0,
                 "servings": int(rec.get('servings', 1)) if pd.notna(rec.get('servings')) else 1,
                 "prep_time_min": int(rec.get('prep_time_min', 10)) if pd.notna(rec.get('prep_time_min')) else 10,
@@ -106,7 +108,9 @@ class RecommenderService:
                 "fiber_g": 0.0 if pd.isna(total_fiber) else round(float(total_fiber), 1),
                 "sugar_g": 0.0 if pd.isna(total_sugar) else round(float(total_sugar), 1),
                 "sodium_mg": 0.0 if pd.isna(total_sodium) else round(float(total_sodium), 1),
-                "estimated_cost_vnd": 0.0 if pd.isna(total_cost) else round(float(total_cost), 0)
+                "estimated_cost_vnd": round(float(total_cost), 0) if total_cost is not None else 0.0,
+                "cost_status": cost_status,
+                "price_confidence": price_confidence
             })
 
         self._cached_recipes = recipe_list
